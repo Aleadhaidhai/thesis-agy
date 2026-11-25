@@ -1,0 +1,26 @@
+# Python / environment
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.env
+
+# OS / logs / temp
+.DS_Store
+*.log
+*.tmp
+
+# Node dependencies (frontend vendored static assets remain tracked)
+node_modules/
+
+# Local runtime databases, blobs, and built retrieval indexes
+data/
+data_demo/
+experiments/runs/index/
+experiments/runs/*.npz
+
+# Thesis build intermediates (keep final compiled deliverables)
+thesis/build/*
+!thesis/build/thesis.docx
+!thesis/build/thesis_preview.pdf

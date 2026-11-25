@@ -1,0 +1,269 @@
+{
+  "online": {
+    "functional_tests": [
+      {
+        "id": "FT-01",
+        "name": "用户与机器人列表初始化",
+        "ok": true,
+        "latency_ms": 1.6,
+        "detail": "users=21, bot_present=True"
+      },
+      {
+        "id": "FT-02",
+        "name": "群聊列表可见性与越权访问拦截",
+        "ok": true,
+        "latency_ms": 1.5,
+        "detail": "visible=['c_all', 'c_backend', 'c_onboard'], c_mgmt_status=403"
+      },
+      {
+        "id": "FT-03",
+        "name": "文本问答与引用来源卡片生成",
+        "ok": true,
+        "latency_ms": 41998.0,
+        "detail": "qa_id=1, n_cit=2, ans=订单服务数据库连接池的maximumPoolSize参数在2026-10-13被下调至40 [1]。此前，该参数在2026-08-04被上调"
+      },
+      {
+        "id": "FT-04",
+        "name": "多模态截图问答检索与作答",
+        "ok": true,
+        "latency_ms": 22382.5,
+        "detail": "n_cit=1, ans=8月11日用户中心刷新 token 失败的错误码是 UC-5031，根因为 Redis 命令超时，具体是 Redis 集群节点 10.20.3.17:"
+      },
+      {
+        "id": "FT-05",
+        "name": "跨群问答权限隔离验证",
+        "ok": true,
+        "latency_ms": 27005.4,
+        "detail": "c_mgmt_cits=0, refused=True, ans=抱歉，在你有权限访问的群聊和文件中没有找到相关记录。"
+      },
+      {
+        "id": "FT-06",
+        "name": "无答案问题诚实拒答验证",
+        "ok": true,
+        "latency_ms": 31687.6,
+        "detail": "refused=True, ans=根据现有记录无法确定支付服务的 Redis 集群具体有多少个节点。证据中仅提及 Redis 集群节点 10.20.3.17:637"
+      },
+      {
+        "id": "FT-07",
+        "name": "用户反馈提交与后台统计刷新",
+        "ok": true,
+        "latency_ms": 73.5,
+        "detail": "qa_total=4, qa_like=1, mkus=130, vecs={'mku_text': 130, 'mku_visual': 12}"
+      },
+      {
+        "id": "FT-08",
+        "name": "管理后台 MKU 筛选与推理轨迹查看",
+        "ok": true,
+        "latency_ms": 22.7,
+        "detail": "attachment_mkus=3, qa_logs=4, trace_steps=7"
+      },
+      {
+        "id": "FT-09",
+        "name": "IM 多模态文件上传与下载接口",
+        "ok": true,
+        "latency_ms": 56.6,
+        "detail": "msg_type=file, file_id=501f79a45b99, dl_bytes=49"
+      },
+      {
+        "id": "FT-10",
+        "name": "增量同步入库与新知识立即可检验证",
+        "ok": true,
+        "latency_ms": 26295.4,
+        "detail": "msg_id=f33474e969954546, ingest={'messages': 2, 'parsed': 2, 'topics': 2, 'mkus': 3, 'visual': 0, 'seconds': {}, 'elapsed_s': 5.3}, ans=新人试用期导师双周反馈表需提交至内网教务系统，截止时间为隔周周五 18:00 [2]。"
+      }
+    ],
+    "incremental_ingest": {
+      "messages": 2,
+      "parsed": 2,
+      "topics": 2,
+      "mkus": 3,
+      "visual": 0,
+      "seconds": {},
+      "elapsed_s": 5.3
+    },
+    "read_concurrency": [
+      {
+        "threads": 1,
+        "n_req": 48,
+        "wall_s": 0.238,
+        "qps": 201.75,
+        "mean_ms": 1.85,
+        "p50_ms": 1.31,
+        "p95_ms": 4.32,
+        "errors": 0
+      },
+      {
+        "threads": 4,
+        "n_req": 48,
+        "wall_s": 0.083,
+        "qps": 575.1,
+        "mean_ms": 2.83,
+        "p50_ms": 1.99,
+        "p95_ms": 8.14,
+        "errors": 0
+      },
+      {
+        "threads": 8,
+        "n_req": 48,
+        "wall_s": 0.083,
+        "qps": 576.26,
+        "mean_ms": 9.5,
+        "p50_ms": 9.07,
+        "p95_ms": 15.91,
+        "errors": 0
+      },
+      {
+        "threads": 16,
+        "n_req": 48,
+        "wall_s": 0.122,
+        "qps": 394.11,
+        "mean_ms": 32.57,
+        "p50_ms": 34.46,
+        "p95_ms": 43.32,
+        "errors": 0
+      }
+    ],
+    "ask_concurrency": [
+      {
+        "threads": 1,
+        "n_req": 4,
+        "wall_s": 94.368,
+        "qps": 0.042,
+        "mean_ms": 23580.2,
+        "p50_ms": 21833.63,
+        "p95_ms": 33810.68,
+        "errors": 0
+      },
+      {
+        "threads": 2,
+        "n_req": 4,
+        "wall_s": 73.931,
+        "qps": 0.054,
+        "mean_ms": 36163.5,
+        "p50_ms": 35588.58,
+        "p95_ms": 41727.86,
+        "errors": 0
+      },
+      {
+        "threads": 4,
+        "n_req": 4,
+        "wall_s": 79.401,
+        "qps": 0.05,
+        "mean_ms": 67848.3,
+        "p50_ms": 73659.48,
+        "p95_ms": 79338.67,
+        "errors": 0
+      }
+    ]
+  },
+  "stages": {
+    "retrieval_stages_20q": {
+      "embed_m3_ms": {
+        "mean_ms": 62.45,
+        "p95_ms": 38.93
+      },
+      "dense_ms": {
+        "mean_ms": 3.13,
+        "p95_ms": 2.7
+      },
+      "sparse_ms": {
+        "mean_ms": 2.0,
+        "p95_ms": 2.18
+      },
+      "bm25_ms": {
+        "mean_ms": 11.8,
+        "p95_ms": 0.59
+      },
+      "visual_clip_ms": {
+        "mean_ms": 11.78,
+        "p95_ms": 13.93
+      },
+      "rrf_sqlite_ms": {
+        "mean_ms": 0.89,
+        "p95_ms": 2.49
+      },
+      "rerank_ms": {
+        "mean_ms": 1113.38,
+        "p95_ms": 1148.6
+      },
+      "total_ms": {
+        "mean_ms": 1205.43,
+        "p95_ms": 1183.86
+      }
+    },
+    "agent_nodes_6q": {
+      "understand": {
+        "calls": 6,
+        "per_call_mean_ms": 6498.2,
+        "per_query_mean_ms": 6498.2
+      },
+      "retrieve": {
+        "calls": 8,
+        "per_call_mean_ms": 2152.7,
+        "per_query_mean_ms": 2870.3
+      },
+      "reflect": {
+        "calls": 8,
+        "per_call_mean_ms": 6539.4,
+        "per_query_mean_ms": 8719.3
+      },
+      "generate": {
+        "calls": 6,
+        "per_call_mean_ms": 8706.2,
+        "per_query_mean_ms": 8706.2
+      },
+      "verify": {
+        "calls": 6,
+        "per_call_mean_ms": 317.9,
+        "per_query_mean_ms": 317.9
+      },
+      "total_e2e": {
+        "calls": 6,
+        "per_query_mean_ms": 27124.6,
+        "p95_ms": 40560.56
+      }
+    },
+    "build_stats": {
+      "full": {
+        "messages": 946,
+        "parsed": 946,
+        "topics": 93,
+        "mkus": 130,
+        "visual": 12,
+        "elapsed_s": 740.4
+      },
+      "nosummary": {
+        "messages": 946,
+        "parsed": 0,
+        "topics": 93,
+        "mkus": 130,
+        "visual": 12,
+        "elapsed_s": 17.4
+      },
+      "ocronly": {
+        "messages": 946,
+        "parsed": 9,
+        "topics": 93,
+        "mkus": 130,
+        "visual": 12,
+        "elapsed_s": 583.8
+      },
+      "noctx": {
+        "messages": 946,
+        "parsed": 0,
+        "topics": 93,
+        "mkus": 130,
+        "visual": 12,
+        "elapsed_s": 615.1
+      },
+      "fixedwin": {
+        "messages": 946,
+        "parsed": 0,
+        "topics": 163,
+        "mkus": 200,
+        "visual": 12,
+        "elapsed_s": 785.6
+      }
+    }
+  }
+}

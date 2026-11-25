@@ -1,0 +1,9051 @@
+{
+ "facts": {
+  "F001": {
+   "seed_id": "F001",
+   "conv": "c_backend",
+   "topic": "订单服务数据库连接池参数调整",
+   "date": "2026-08-04 10:20",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_wangqiang",
+     "text": "张哥，李娜，我这边调整了订单服务数据库连接池的参数，需要你们确认一下。",
+     "reply_to": null,
+     "mentions": [
+      "u_zhangwei",
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，你说说具体改了啥？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "最大连接池从 20 调整到 50，minimumIdle 设置为 10，是因为大促压测的时候出现了连接等待超时的问题。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，压测的时候确实有这个问题，这样调整应该能缓解。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "王强，你这个调整是生产环境直接改的吗？",
+     "reply_to": 0,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "是的，已经上线了，目前监控没报异常，暂时稳定。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好，继续观察，有问题随时反馈。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "对了，这个参数调整是基于什么压测数据？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "是大促压测，流量峰值超过预期，连接池不够用，导致等待超时。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "明白，那这个参数调整是 8 月 4 日做的吗？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "是的，8 月 4 日上午做的，现在生产环境运行正常。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "(keys": true
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，那后续要持续关注连接池的使用情况。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，有问题及时处理。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F002": {
+   "seed_id": "F002",
+   "conv": "c_backend",
+   "topic": "用户中心接口报错排查",
+   "date": "2026-08-11 15:05",
+   "attachment": {
+    "kind": "terminal",
+    "title": "user-center 日志",
+    "lines": [
+     "2026-08-11 14:52:07 ERROR [user-center] c.y.uc.service.TokenService - refresh token failed",
+     "io.lettuce.core.RedisCommandTimeoutException: Command timed out after 3 second(s)",
+     "  at io.lettuce.core.internal.ExceptionFactory.createTimeoutException(ExceptionFactory.java:59)",
+     "2026-08-11 14:52:07 WARN  [user-center] errorCode=UC-5031 traceId=7f3a9c21e8",
+     "2026-08-11 14:52:09 ERROR [user-center] redis cluster node 10.20.3.17:6379 marked as FAIL"
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_lina",
+     "text": "用户中心刷新 token 失败，有问题，看下截图",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "这个得尽快处理，影响用户体验",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "有没有日志？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "日志文档发群里了",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "运维这边先查 Redis 集群",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，确认下 Redis 是否有故障",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "刚看到截图，可能跟 Redis 节点有关",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "先确认 Redis 集群状态，是否节点挂了",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "运维在排查 Redis，暂时没发现异常",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "(key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那看看是否有超时的情况",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "超时阈值是 3 秒左右，可能节点响应慢",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "已重启 Redis 节点，看看是否恢复",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "等下看下线上请求是否恢复",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F003": {
+   "seed_id": "F003",
+   "conv": "c_backend",
+   "topic": "接口规范文档发布",
+   "date": "2026-08-19 11:00",
+   "attachment": {
+    "kind": "pdf",
+    "title": "云岚后端接口设计规范 v1.2",
+    "sections": [
+     [
+      "1 总则",
+      "所有对外 HTTP 接口统一使用 RESTful 风格，路径使用小写中划线命名，版本号放在路径前缀，如 /api/v2/orders。"
+     ],
+     [
+      "2 返回结构",
+      "统一返回 {code, message, data, traceId}。code=0 表示成功；业务错误码为 6 位，前两位为系统编号：用户中心 10、订单 20、支付 30、灵犀 40。"
+     ],
+     [
+      "3 分页",
+      "分页参数统一为 pageNo（从 1 开始）和 pageSize，pageSize 最大 200，超过时服务端截断为 200。"
+     ],
+     [
+      "4 幂等",
+      "所有创建类 POST 接口必须支持 Idempotency-Key 请求头，服务端保留 24 小时的幂等记录。"
+     ],
+     [
+      "5 超时",
+      "服务间调用默认超时 800 毫秒，重试最多 2 次，仅对幂等接口重试。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_zhangwei",
+     "text": "大家看下接口规范文档，统一标准。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_lina",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "好的，这个得尽快处理。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "看下截图，不太清楚。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "@u_xiaochen 这个部分要特别注意重试次数。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "+1，接口超时时间统一设置。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "幂等记录保留时间是关键，别出错。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "明白了，这个部分我再仔细看一遍。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "文档发群里了，大家确认下。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "好的，统一规范后开发更顺畅。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "有疑问可以问我，刚入职。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "文档已确认，后续按此执行。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "没问题，统一规范后效率更高。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F004": {
+   "seed_id": "F004",
+   "conv": "c_backend",
+   "topic": "消息队列选型讨论",
+   "date": "2026-08-26 16:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_zhangwei",
+     "text": "灵犀项目的消息队列选型讨论，大家有想法的可以提一下。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "@u_zhangwei 我觉得 Kafka 还是挺合适的，性能稳定，社区也成熟。",
+     "reply_to": 0,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "不过 Kafka 不支持事务消息和延迟消息，这两个在我们业务里是必须的。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "对，而且我们之前在别的项目中用过 RocketMQ，运维经验比较丰富。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那看来 RocketMQ 是比较合适的选择，大家有没有反对意见？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "+1，支持 RocketMQ，事务和延迟消息都能满足。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "另外，RocketMQ 的事务消息在金融场景下很常用，我们这个项目也涉及相关场景。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "还有延迟消息，我们之前用过，延迟时间精确到秒级。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好，那我们统一用 RocketMQ，后续由我来安排部署和配置。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "收到，没问题，我这边开始准备相关文档。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，那我先同步运维团队，确保他们能支持。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "没问题，这个选型很合理，大家辛苦了。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F005": {
+   "seed_id": "F005",
+   "conv": "c_backend",
+   "topic": "代码评审规范调整",
+   "date": "2026-09-08 10:10",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_zhangwei",
+     "text": "大家注意，从 9 月 8 日起，后端 MR 合入 main 分支需要至少 2 名评审人批准，单元测试覆盖率不低于 70%。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_lina",
+     "text": "@u_zhangwei 好的，这个调整是为了解决之前 MR 容易被快速合入的问题，对吗？",
+     "reply_to": 0,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "是的，之前是 1 名评审人，现在提高到 2 名，确保代码质量。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "明白了，@u_lina 之前我提交的 MR 有时候就一个人审，现在得等两个人，可能要花点时间。",
+     "reply_to": 1,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "@u_xiaochen 没关系，慢慢来，我们都在适应新规范。",
+     "reply_to": 3,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "另外，单元测试覆盖率必须达到 70% 以上，否则 MR 无法通过。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，我会检查测试覆盖率，@u_zhangwei 不然 MR 会卡住。",
+     "reply_to": 5,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "那我们得确保测试用例足够，不能为了提高覆盖率而写冗余代码。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "没错，覆盖率是参考，不是标准，关键还是代码质量。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "收到，@u_zhangwei 会注意平衡质量和效率。",
+     "reply_to": 8,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "大家如果在 MR 评审中发现问题，及时反馈，我们大家一起维护代码质量。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，@u_lina 这个是我们共同的责任。",
+     "reply_to": 10,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "那我先去调整测试用例，确保 MR 顺利通过。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，@u_xiaochen 等你完成后再提交 MR。",
+     "reply_to": 12,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F006": {
+   "seed_id": "F006",
+   "conv": "c_backend",
+   "topic": "订单服务慢查询优化",
+   "date": "2026-09-22 14:40",
+   "attachment": {
+    "kind": "form",
+    "title": "慢查询分析 - order_db",
+    "fields": [
+     [
+      "SQL",
+      "SELECT * FROM t_order WHERE user_id=? AND status IN (1,2) ORDER BY create_time DESC"
+     ],
+     [
+      "平均耗时",
+      "1830 ms"
+     ],
+     [
+      "扫描行数",
+      "2,148,903"
+     ],
+     [
+      "执行计划",
+      "type=ALL, key=NULL"
+     ],
+     [
+      "优化建议",
+      "新增联合索引 idx_user_status_ctime(user_id, status, create_time)"
+     ],
+     [
+      "优化后耗时",
+      "12 ms"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_wangqiang",
+     "text": "订单服务查询有点慢，需要优化下。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "是哪个查询？发截图看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "看下截图。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，这个得尽快处理。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "已经加了联合索引，效果不错。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，确认下性能提升。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "文档发群里了，大家查下。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，我看看。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "这个索引应该能解决大部分问题。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "尽快上线，影响范围挺大的。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "正在压测，结果马上发。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，等结果。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "线上问题应该能缓解不少。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "辛苦了，记得发个语音总结。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F007": {
+   "seed_id": "F007",
+   "conv": "c_backend",
+   "topic": "订单服务连接池参数再次调整",
+   "date": "2026-10-13 10:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_lina",
+     "text": "张哥，订单服务连接池参数调整了，需要确认下是否影响性能。",
+     "reply_to": null,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，你先说说具体调了什么参数。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "把 maximumPoolSize 从 50 下调到了 40。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "为什么调这么低？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "因为数据库侧最大连接数受限，而且多实例扩容后总连接数超过了 MySQL max_connections。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那现在总连接数是多少？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "现在是 38，暂时在安全范围内。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，暂时没问题，但要持续监控。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "那这个调整是临时的吗？",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "暂时是的，等数据库扩容完成后，再评估是否需要调整。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "+1，保持关注。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那明天早上再看一下监控数据，确认是否稳定。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "收到，我这边会把监控数据整理一下发群里。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "好，辛苦了。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F008": {
+   "seed_id": "F008",
+   "conv": "c_frontend",
+   "topic": "组件库升级",
+   "date": "2026-08-06 11:15",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_zhaomin",
+     "text": "孙浩，组件库升级这事你来牵头，记得把时间控制在 8 月 14 日前。",
+     "reply_to": null,
+     "mentions": [
+      "u_sunhao"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "收到，正在梳理升级方案，有啥需要注意的吗？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "主要是 Element Plus 从 2.3 升级到 2.7，记得同步 UI 走查的改动。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，这个版本改动挺大的，特别是表格组件。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "对，记得在升级后，表格的 row-key 必须显式传入。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "明白了，这个改动会影响部分页面，我先做兼容性测试。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "有需要我这边配合的可以随时说。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "现在进度大概 30%，预计这个月内能搞定。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "嗯，记得把升级后的文档整理一下，方便其他人查看。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，文档我这边同步更新，有问题随时@我。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "嗯，升级完成记得通知我一下。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "收到，完成第一时间@你。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "辛苦了，有问题随时沟通。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "+1，继续加油！",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F009": {
+   "seed_id": "F009",
+   "conv": "c_frontend",
+   "topic": "首页性能优化结果",
+   "date": "2026-08-20 17:00",
+   "attachment": {
+    "kind": "chart",
+    "title": "控制台首页 LCP（毫秒）",
+    "x": [
+     "8/12",
+     "8/14",
+     "8/16",
+     "8/18",
+     "8/20"
+    ],
+    "series": {
+     "优化前": [
+      3200,
+      3150,
+      3300,
+      3180,
+      3250
+     ],
+     "优化后": [
+      3200,
+      2600,
+      1900,
+      1500,
+      1450
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_sunhao",
+     "text": "首页性能优化结果，大家看看",
+     "reply_to": null,
+     "mentions": [
+      "u_zhaomin",
+      "u_chenjing"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "好的，数据发群里了",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "看下截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "这个得尽快处理",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "嗯，优化方向正确",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "有部分页面还有提升空间",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，下阶段重点优化这些",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "+1",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "文档发群里了",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "好的，继续推进",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "我发个语音",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "收到",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F010": {
+   "seed_id": "F010",
+   "conv": "c_frontend",
+   "topic": "小程序发布流程",
+   "date": "2026-09-03 10:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_zhaomin",
+     "text": "大家注意，小程序发布流程又更新了，记得按新流程走。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "@u_zhaomin 什么新流程？我们之前不是一直这样操作吗？",
+     "reply_to": 0,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "测试环境要等徐丽验收通过才能发布，这个环节不能跳过。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "那审核时间呢？还是每周二、周四提交吗？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "是的，审核时间还是每周二、周四下午提交，紧急情况可以随时提交，但必须在群里报备。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "明白了，那徐丽验收没通过就不能提交审核了，对吧？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "+1，测试没通过直接提交审核是不行的。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "那如果紧急修复，要怎么操作？",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "紧急修复可以直接提交审核，但必须在群里报备，比如@所有人说明情况。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，那我先去测试环境确认下，没问题就提交审核。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "辛苦了，记得跟徐丽确认测试结果。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，有问题随时沟通。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F011": {
+   "seed_id": "F011",
+   "conv": "c_frontend",
+   "topic": "前端构建失败",
+   "date": "2026-09-17 15:20",
+   "attachment": {
+    "kind": "terminal",
+    "title": "CI build #1842",
+    "lines": [
+     "$ pnpm build",
+     "vite v5.4.2 building for production...",
+     "✗ Build failed in 41.2s",
+     "error during build:",
+     "[vite:esbuild] Transform failed with 1 error:",
+     "src/views/billing/Invoice.vue:88:14: ERROR: Unexpected \"?.\"",
+     "hint: set build.target to 'es2020' or higher in vite.config.ts"
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_sunhao",
+     "text": "前端构建又失败了，麻烦看看问题",
+     "reply_to": null,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "看下截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "明白了，是可选链语法的问题",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "对，这个得尽快处理",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "我发个语音",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，收到",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "+1，这个解决起来应该不难",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "文档发群里了",
+     "reply_to": 6,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "文档收到，尽快调整配置",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "嗯，我看看配置",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "记得把 build.target 拉到 （见附件） 以上",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，马上改",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "那现在可以重新触发构建了",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F012": {
+   "seed_id": "F012",
+   "conv": "c_product",
+   "topic": "灵犀 V1.0 需求评审",
+   "date": "2026-08-07 14:00",
+   "attachment": {
+    "kind": "docx",
+    "title": "灵犀智能客服 V1.0 PRD",
+    "sections": [
+     [
+      "1 背景",
+      "客户 A 银行希望将 40% 的常见咨询由机器人自动处理，降低人工坐席压力。"
+     ],
+     [
+      "2 核心功能",
+      "多轮问答、知识库管理、人工转接、满意度评价、对话质检。"
+     ],
+     [
+      "3 性能指标",
+      "首字响应时间不超过 1.5 秒，问答准确率不低于 85%，支持 500 并发会话。"
+     ],
+     [
+      "4 里程碑",
+      "9 月 15 日完成内测，9 月 30 日交付客户 UAT，10 月 20 日正式上线。"
+     ],
+     [
+      "5 不做范围",
+      "V1.0 不支持语音渠道和多语言。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "灵犀 V1.0 需求评审开始，大家先看下截图。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "首字响应和并发支持没问题，但得确认后端架构。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "测试指标部分需要详细看文档。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "这个得尽快处理，时间线比较紧。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "版本上线时间线确认下，大家有疑问随时提。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "+1，我这边补充点需求细节。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "后端那边得提前准备资源，避免上线时出问题。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "测试环境先部署好，等PRD确认后开始。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "先按这个节奏推进，有问题及时同步。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "文档发群里了，大家记得查收。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "收到，文档内容没问题。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "文档里提到的并发支持，我们得提前做压测。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "测试计划也得同步更新，我这边先拉个时间表。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F013": {
+   "seed_id": "F013",
+   "conv": "c_product",
+   "topic": "会员积分规则",
+   "date": "2026-08-21 10:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_chenjing",
+     "text": "大家好，关于会员积分规则，我们是不是要确定下具体方案了？",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "是的，昨天会议已经说了，这个规则是关键点之一。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "@u_liuyang 有没有具体的数据，比如每消费积多少分？",
+     "reply_to": 1,
+     "mentions": [
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "每消费 1 元积 1 分，这个是初步结论。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "+1，那积分有效期呢？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "有效期是 12 个月，对吧？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "是的，12 个月，这个是客户反馈的，也符合行业标准。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "好的，那积分兑换规则呢？",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "100 积分可抵扣 1 元，对吧？",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "没错，这个比例是根据用户使用习惯和成本控制确定的。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "(key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "那有没有单笔订单的抵扣上限？",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "有，单笔订单抵扣上限为订单金额的 20%。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "这个限制是为了防止用户过度依赖积分，保证现金流。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "好的，这些规则暂时确定，等下周排期再进一步细化。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F014": {
+   "seed_id": "F014",
+   "conv": "c_product",
+   "topic": "竞品分析",
+   "date": "2026-09-04 16:00",
+   "attachment": {
+    "kind": "pptx",
+    "title": "智能客服竞品分析",
+    "slides": [
+     [
+      "竞品概览",
+      "对比了晓答、智语、云客服三家产品。"
+     ],
+     [
+      "价格对比",
+      "晓答 每坐席每月 299 元；智语 按会话量计费 0.08 元/次；云客服 每年 12 万元起。"
+     ],
+     [
+      "核心差异",
+      "智语的知识库支持自动从工单抽取问答对，是我们 V2 需要重点追赶的能力。"
+     ],
+     [
+      "结论",
+      "我们在私有化部署和数据安全上有优势，建议主打金融和政务客户。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "大家看一下竞品分析的资料，我们这边需要重点讨论一下定价和功能差异。",
+     "reply_to": null,
+     "mentions": [
+      "u_chenjing",
+      "u_linfeng"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "收到，我看看截图。定价这块我们得注意竞争对手的策略。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "晓答那边的计费方式看起来挺灵活的，不过我们私有化部署的优势不能丢。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "对，我们得把数据安全和私有化作为核心卖点。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "我发个语音，讲讲智语那边的自动问答对提取功能。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好的，这个功能我们得尽快跟进，特别是 （见附件） 的需求。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "明白了，这个功能对金融客户来说很重要。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "文档发群里了，大家看完后反馈一下重点。",
+     "reply_to": 0,
+     "mentions": [
+      "u_chenjing",
+      "u_linfeng"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "收到，这个 PPT 很详细，我先看看。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "这个得尽快处理，特别是定价策略和功能对比。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "+1，重点是私有化和数据安全，我们得突出这个。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好，那我先跟销售团队同步一下。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "好的，保持沟通，我这边同步给开发。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F015": {
+   "seed_id": "F015",
+   "conv": "c_product",
+   "topic": "灵犀上线时间调整",
+   "date": "2026-09-25 11:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "唐总，杨雪，关于灵犀上线时间，有个情况需要同步一下。",
+     "reply_to": null,
+     "mentions": [
+      "u_tangming",
+      "u_yangxue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "嗯？怎么了？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "A 银行的安全测评排期推迟了，所以我们得把灵犀的上线时间从 10 月 20 日延后。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "延后到什么时候？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "预计是 11 月 3 日，UAT 时间不变。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "A 银行那边我这边也确认了，确实测评排期改了。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "那上线时间调整没问题，UAT 时间还是按原计划。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，会同步给项目组和相关干系人。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "@u_liuyang 你那边 PRD 也要同步更新上线时间对吧？",
+     "reply_to": 6,
+     "mentions": [
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "是的，PRD 会在明天同步更新，@u_tangming 你那边开发排期也要同步。",
+     "reply_to": 8,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "+1，我会让开发组同步更新排期。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "好的，那我这边也同步客户，确保他们知道上线时间变化。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "辛苦了，保持沟通。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F016": {
+   "seed_id": "F016",
+   "conv": "c_product",
+   "topic": "V1.1 需求优先级",
+   "date": "2026-10-15 15:00",
+   "attachment": {
+    "kind": "xlsx",
+    "title": "灵犀V1.1需求池",
+    "sheets": {
+     "需求池": [
+      [
+       "编号",
+       "需求",
+       "优先级",
+       "提出方",
+       "预估人日"
+      ],
+      [
+       "R-101",
+       "坐席端快捷回复",
+       "P0",
+       "客户A银行",
+       5
+      ],
+      [
+       "R-102",
+       "知识库批量导入Excel",
+       "P0",
+       "客户成功",
+       3
+      ],
+      [
+       "R-103",
+       "对话记录导出",
+       "P1",
+       "客户A银行",
+       2
+      ],
+      [
+       "R-104",
+       "多语言支持",
+       "P2",
+       "销售",
+       15
+      ],
+      [
+       "R-105",
+       "敏感词实时告警",
+       "P0",
+       "客户A银行",
+       4
+      ]
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "大家看一下 （见附件） 的需求优先级，有啥意见？",
+     "reply_to": null,
+     "mentions": [
+      "u_chenjing",
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "收到，看下截图。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "这个得尽快处理，尤其是敏感词告警。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "对，这个是 （见附件），影响用户体验。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "好的，我们这边先排期。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "坐席端快捷回复和知识库批量导入也挺重要的。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "文档发群里了，大家确认下优先级。",
+     "reply_to": 0,
+     "mentions": [
+      "u_chenjing",
+      "u_zhangwei"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "收到，我看看。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，这个需求池挺全的。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "多语言支持是 （见附件），先放后面。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "嗯，资源有限，得平衡一下。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "看下截图，确认下人日分配。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "(key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "好的，确认后我们定排期。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F017": {
+   "seed_id": "F017",
+   "conv": "c_sre",
+   "topic": "夜间支付网关告警",
+   "date": "2026-08-09 02:15",
+   "attachment": {
+    "kind": "chart",
+    "title": "pay-gateway 5xx 错误率（%）",
+    "x": [
+     "01:50",
+     "02:00",
+     "02:05",
+     "02:10",
+     "02:15",
+     "02:30"
+    ],
+    "series": {
+     "5xx错误率": [
+      0.1,
+      0.2,
+      6.8,
+      12.4,
+      3.1,
+      0.2
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_wuyue",
+     "text": "发现支付网关有异常，大家看看情况",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "收到，马上看下截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "有没有影响到业务？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "看下截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "这个得尽快处理",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "@u_wuyue 你这边查下什么模块",
+     "reply_to": 3,
+     "mentions": [
+      "u_wuyue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "正在排查，可能和数据库有关",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "尽快恢复，影响大",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "": "",
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "我发个语音，讲下当前问题",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "好的，收到",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "等下看下是否需要扩容",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，监控也要同步",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "正在同步，有问题及时沟通",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "恢复了，继续观察",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F018": {
+   "seed_id": "F018",
+   "conv": "c_sre",
+   "topic": "支付网关故障复盘",
+   "date": "2026-08-10 10:00",
+   "attachment": {
+    "kind": "pdf",
+    "title": "2026-08-09 支付网关故障复盘报告",
+    "sections": [
+     [
+      "故障概述",
+      "8 月 9 日 02:03 至 02:28，支付网关出现大量 5xx，影响时长 25 分钟，约 3100 笔支付请求失败。"
+     ],
+     [
+      "根因",
+      "运维在变更窗口内更新了网关证书，但新证书链缺少中间证书，导致部分渠道回调 TLS 握手失败。"
+     ],
+     [
+      "处理过程",
+      "02:12 回滚证书，02:28 错误率恢复正常。"
+     ],
+     [
+      "改进措施",
+      "1. 证书变更纳入灰度发布；2. 新增证书链完整性检查脚本；3. 支付链路告警阈值由 5% 下调为 2%。负责人：黄涛，完成时间 8 月 31 日。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_huangtao",
+     "text": "大家，关于8月9日支付网关故障的复盘，文档发群里了，麻烦看看。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "这个得尽快处理，证书链检查脚本得尽快安排。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "灰度发布也得同步推进，避免下次再出问题。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "是的，我这边协调下测试环境，尽快验证。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "告警阈值下调到（见附件），这个调整要确保监控系统同步更新。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "(key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "好的，我这边先同步通知运维团队。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "@u_tangming 这个改进措施需要你们团队牵头落实。",
+     "reply_to": 0,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "明白，尽快推进。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "证书变更纳入灰度，这个流程得再确认下。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "收到，我这边同步给风控和支付团队。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "好的，保持沟通。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "附件里的具体数字和细节，大家先别外传。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F019": {
+   "seed_id": "F019",
+   "conv": "c_sre",
+   "topic": "发布窗口规定",
+   "date": "2026-08-28 18:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_huangtao",
+     "text": "唐总，关于发布窗口的规则，咱们是不是有统一规定？",
+     "reply_to": null,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "是的，常规发布窗口是每周二和周四的14:00到17:00。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那周五和节假日前一天能发布吗？",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "不能，周五和节假日前一天是禁止常规发布的。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，那紧急发布的话流程是怎样的？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "紧急发布需要我审批，不能擅自操作。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "明白了，那咱们得确保紧急发布流程顺畅。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "+1，咱们也要提前做好容量规划。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "对，容量规划也是发布前必须考虑的。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "那咱们下周的发布窗口是周二和周四对吧？",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "是的，周二和周四 14:00-17:00。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "好的，记住周五不能发布。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，周五和节假日前一天咱们得特别注意。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "紧急发布记得找唐总审批，别搞错。",
+     "reply_to": 12,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": true
+    }
+   ]
+  },
+  "F020": {
+   "seed_id": "F020",
+   "conv": "c_sre",
+   "topic": "语音交接值班事项",
+   "date": "2026-09-12 21:30",
+   "attachment": {
+    "kind": "audio",
+    "text": "浩哥我交接一下今晚的值班情况。灵犀的 GPU 推理节点 gpu-node-03 显存占用一直在百分之九十五左右，我已经把它从负载均衡里摘掉了，明天上午需要找周杰确认是不是模型内存泄漏。另外 Kafka 那边日志集群磁盘还剩百分之十八，明天要扩容。"
+   },
+   "messages": [
+    {
+     "speaker": "u_wuyue",
+     "text": "语音交接，有需要看下截图的。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "有两件事，一个 gpu 节点显存高，另一个日志磁盘快满了。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，先看截图。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "那个 gpu-（见附件） 的情况，已经从负载均衡摘除。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "知道了，这个得尽快处理。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "文档发群里了，你们看看。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "+1，日志磁盘这情况不能拖。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "我发个语音，说下具体情况。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "收到，我先听语音。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "那个 gpu 节点，周杰那边需要确认是否内存泄漏。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好，我先跟进。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "3": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "日志磁盘扩容的事，我这边先准备申请。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "辛苦了，记得提醒下值班。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F021": {
+   "seed_id": "F021",
+   "conv": "c_sre",
+   "topic": "监控告警平台迁移",
+   "date": "2026-10-09 14:20",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_huangtao",
+     "text": "吴越，监控告警平台的迁移进度怎么样了？",
+     "reply_to": null,
+     "mentions": [
+      "u_wuyue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "已经完成了 Prometheus 的部署，现在在做 Grafana 的图表迁移，预计这周能完成。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，那迁移期间需要并行运行 Zabbix 和 Prometheus 吗？",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "是的，迁移期间两套系统会并行运行，确保告警不中断。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "+1，这样更稳妥。那迁移完成的时间是？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "计划在 10 月 31 日前完成迁移，目前进度还比较顺利。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，那要确保监控告警平台的迁移不会影响到生产环境的稳定性。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "明白，已经在做压力测试和告警策略的调整，确保迁移后的系统稳定。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "辛苦了，有需要我这边协调资源的话，随时喊我。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "谢谢，目前进展顺利，暂时没有问题。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好，那我这边继续关注其他系统的状态。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "迁移到 Prometheus + Grafana + Alertmanager，确保更灵活的告警管理。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "了解，后续的容量规划也要同步考虑，避免资源不足。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wuyue",
+     "text": "已经列入后续工作计划，会提前评估资源需求。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F022": {
+   "seed_id": "F022",
+   "conv": "c_sre",
+   "topic": "发布窗口调整",
+   "date": "2026-10-20 16:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_huangtao",
+     "text": "唐总，关于发布窗口的调整，我们这边需要确认一下，最近的安排是怎样的？",
+     "reply_to": null,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "好的，黄涛，我们从 10 月 20 日起，生产常规发布窗口调整为每周二、周三、周四的 10:00-12:00 和 14:00-17:00，周五还是禁止常规发布。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，收到，周五确实不能安排常规发布。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "是的，周五的窗口只用于紧急发布，所以请大家注意安排。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "明白了，那我们这边会同步更新发布计划，确保所有团队清楚新的时间安排。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "+1，也请各团队提前做好准备，避免影响到正常业务。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "那周五的紧急发布流程，是不是需要走额外的审批？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "是的，周五的紧急发布必须提前 24 小时提交审批，并且需要运维和产品负责人共同确认。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "好的，明白了，我们会加强流程管理，确保周五发布安全。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "辛苦了，黄涛，有需要随时找我。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "谢谢唐总支持，我们这边已经开始同步信息。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "那本周的发布计划，记得在发布前 3 天同步到 SRE 团队。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "收到，会准时同步。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "辛苦了，保持沟通。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F023": {
+   "seed_id": "F023",
+   "conv": "c_lingxi",
+   "topic": "灵犀技术方案",
+   "date": "2026-08-13 10:00",
+   "attachment": {
+    "kind": "diagram",
+    "title": "灵犀系统架构",
+    "nodes": [
+     "渠道接入层(网页/APP/微信)",
+     "对话管理服务",
+     "意图识别(BERT)",
+     "知识检索(ES+向量)",
+     "大模型生成(Qwen 14B)",
+     "人工坐席平台"
+    ],
+    "edges": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      5
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_zhangwei",
+     "text": "大家看一下灵犀系统架构图，咱们得先对齐技术方案",
+     "reply_to": null,
+     "mentions": [
+      "u_zhoujie",
+      "u_liuyang"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，我看看，这个架构挺清晰的",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "张哥，那个意图识别层是不是得和大模型对接？",
+     "reply_to": 0,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "是的，BERT和大模型要同步训练，得先确认数据集",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "好的，我这边把需求文档发群里了",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "刘哥，文档我收到了，这个架构图挺详细的",
+     "reply_to": 4,
+     "mentions": [
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "人工坐席那边对接进度如何？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "差不多快完成了，测试环境已经搭好了",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "那知识检索那边，ES和向量库都准备好了吗？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "是的，已经同步到大模型那边了",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "好的，那我这边先确认一下客户反馈",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "我发个语音，讲讲大模型的调用逻辑",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，语音发群里了",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "+1，这周要推进到测试阶段",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F024": {
+   "seed_id": "F024",
+   "conv": "c_lingxi",
+   "topic": "意图识别模型效果",
+   "date": "2026-08-27 15:30",
+   "attachment": {
+    "kind": "xlsx",
+    "title": "意图识别评测结果",
+    "sheets": {
+     "评测": [
+      [
+       "模型",
+       "准确率",
+       "F1",
+       "推理延迟(ms)"
+      ],
+      [
+       "BERT-base",
+       "0.912",
+       "0.897",
+       18
+      ],
+      [
+       "RoBERTa-wwm",
+       "0.928",
+       "0.915",
+       22
+      ],
+      [
+       "Qwen2.5-1.5B微调",
+       "0.941",
+       "0.933",
+       95
+      ]
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_zhoujie",
+     "text": "灵犀项目意图识别模型效果数据整理好了，大家看看。",
+     "reply_to": null,
+     "mentions": [
+      "u_zhangwei",
+      "u_liuyang"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "模型效果不错，不过延迟问题得关注。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "（见附件） 微调效果挺好的，不过延迟有点高。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "这个得尽快处理，验收前必须达标。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "BERT-base 延迟还可以，准确率也够。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "RoBERTa-wwm 准确率和 （见附件） 都不错，延迟稍微高一点。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "+1，继续优化。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "（见附件） 延迟有点高，得优化一下。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "客户那边反馈不错，但模型稳定性还要加强。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "文档发群里了，大家确认下。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好，我看看。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "验收前务必确保模型稳定。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "看下截图，确认下数据。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F025": {
+   "seed_id": "F025",
+   "conv": "c_lingxi",
+   "topic": "意图模型选型决策",
+   "date": "2026-08-28 11:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_zhoujie",
+     "text": "大家好，关于意图模型选型，我这边初步做了几个方案对比，想听听大家意见。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，周杰，你先说说看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "目前主要考虑 RoBERTa-wwm 和 Qwen2.5-1.5B，综合准确率和延迟来看，RoBERTa-wwm 更适合 V1.0。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "明白，那 Qwen2.5-1.5B 会放 V2 评估？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "对，Qwen2.5-1.5B 的延迟偏高，可能会影响 V1.0 的上线节奏。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，我这边确认下后端接口兼容性，没问题的话就定下来。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "那 V1.0 的意图识别就先走 RoBERTa-wwm 吧，我们产品这边也支持。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "收到，刘洋，后续我们也会持续监控准确率和延迟表现。",
+     "reply_to": 6,
+     "mentions": [
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "对，我这边也安排资源提前准备 Qwen2.5-1.5B 的评估。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "": "",
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "好，那这个决策就先定下来，后续按计划推进。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F026": {
+   "seed_id": "F026",
+   "conv": "c_lingxi",
+   "topic": "内测问题汇总",
+   "date": "2026-09-16 17:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_xuli",
+     "text": "灵犀内测问题汇总，大家看看有没有遗漏。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，测试数据准备好了，等你汇总。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "王强：@u_wangqiang 多轮对话槽位丢失问题，已定位，9 月 22 日前修复。",
+     "reply_to": 0,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "槽位丢失这个问题确实严重，要重点关注。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "内测共发现 37 个缺陷，其中严重缺陷 4 个。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "4 个严重缺陷，最严重的是槽位丢失问题，@u_wangqiang 负责。",
+     "reply_to": 4,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "槽位丢失问题已分配，@u_zhangwei 会协助测试。",
+     "reply_to": 5,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，@u_wangqiang 需要优先处理这个问题。",
+     "reply_to": 6,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "其他缺陷主要集中在接口响应和数据同步上。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "接口问题也需要同步到后端团队，@u_wangqiang 能帮忙协调吗？",
+     "reply_to": 8,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "+1，接口和槽位问题一起处理，@u_zhangwei 你那边进度如何？",
+     "reply_to": 9,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "接口问题已经同步，正在推进修复。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "内测结果已初步汇总，后续会发正式报告。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，辛苦了，@u_xuli。",
+     "reply_to": 12,
+     "mentions": [
+      "u_xuli"
+     ],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F027": {
+   "seed_id": "F027",
+   "conv": "c_lingxi",
+   "topic": "客户UAT反馈",
+   "date": "2026-09-30 19:00",
+   "attachment": {
+    "kind": "audio",
+    "text": "刚和 A 银行开完 UAT 的会，客户整体比较满意，准确率他们抽测是百分之八十七。主要有两个问题：一个是信用卡账单类问题回答太长，希望控制在一百五十字以内；另一个是转人工的按钮要更明显。他们希望十月十五号前给一个优化版本。"
+   },
+   "messages": [
+    {
+     "speaker": "u_yangxue",
+     "text": "客户A银行UAT反馈已汇总，有需要看下截图",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "准确率这块先别急，先看反馈重点",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "@u_zhangwei 信用卡账单类回答过长的问题，这个得尽快处理",
+     "reply_to": 0,
+     "mentions": [
+      "u_zhangwei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "转人工按钮要更明显，这个UI部分应该可以优化",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，先处理长度问题，UI部分我让前端跟进",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "客户希望10月（见附件）日前提供优化版本，时间有点紧",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "这个时间节点要确保，别影响验收",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "收到，会优先排期，尽快推进",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "+1，文档发群里了，大家看下",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "文档发群里了，大家确认下",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "好的，已收到，会同步处理",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "没问题，保持沟通",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F028": {
+   "seed_id": "F028",
+   "conv": "c_lingxi",
+   "topic": "灵犀验收标准",
+   "date": "2026-10-22 10:00",
+   "attachment": {
+    "kind": "docx",
+    "title": "灵犀项目验收标准（客户确认版）",
+    "sections": [
+     [
+      "验收指标",
+      "准确率不低于 85%（客户随机抽取 500 条）；P95 首字响应不超过 2 秒；系统可用性 99.9%。"
+     ],
+     [
+      "验收流程",
+      "客户试运行 2 周无严重缺陷后签署验收单。"
+     ],
+     [
+      "付款",
+      "验收通过后支付合同款 60%，剩余 40% 在上线 3 个月后支付。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "灵犀验收标准文档发群里了，大家看看。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "这个准确率要求挺高的，得确保测试数据覆盖全面。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户那边反馈首字响应时间要求挺严格，得提前优化。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "可用性这块我们这边已经做了压力测试，没问题。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "试运行两周没严重缺陷，我们就能签验收单。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "验收后付款（见附件），这个流程要确认清楚。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户那边对上线时间比较敏感，得确保按时交付。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "这个准确率要求是看下截图，别忘了。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "好的，收到。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "验收标准这块，大家再确认一下，别出错。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "+1，客户那边也得提前沟通好。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "验收文档我再发一遍，确保大家都有。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F029": {
+   "seed_id": "F029",
+   "conv": "c_qa",
+   "topic": "压测报告",
+   "date": "2026-08-18 14:00",
+   "attachment": {
+    "kind": "xlsx",
+    "title": "订单服务压测报告",
+    "sheets": {
+     "结果": [
+      [
+       "接口",
+       "并发",
+       "TPS",
+       "P99(ms)",
+       "错误率"
+      ],
+      [
+       "创建订单",
+       "500",
+       "1260",
+       "310",
+       "0.02%"
+      ],
+      [
+       "查询订单",
+       "1000",
+       "5400",
+       "85",
+       "0%"
+      ],
+      [
+       "取消订单",
+       "300",
+       "880",
+       "260",
+       "0.05%"
+      ]
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_mafei",
+     "text": "压测报告发群里了，大家看看。",
+     "reply_to": null,
+     "mentions": [
+      "u_xuli",
+      "u_lina"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，我这边也看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "这个取消订单的错误率有点高，得尽快处理。",
+     "reply_to": 0,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_lina",
+     "text": "嗯，我这边看下截图。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "创建订单的 （见附件） 有点高，可以优化一下。",
+     "reply_to": 0,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，我看看怎么优化。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "查询订单的 TPS 很高，没问题。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "嗯，可以继续保持。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "我这边也看看其他模块的压测数据。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "+1，我们这边也同步下其他组。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "文档发群里了，大家确认下。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xuli",
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，我这边确认了。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     " ": {
+      "speaker": "u_xuli",
+      "text": "好的，那我们准备上线。",
+      "reply_to": 12,
+      "mentions": [],
+      "attachment": false,
+      "key": false
+     }
+    }
+   ]
+  },
+  "F030": {
+   "seed_id": "F030",
+   "conv": "c_qa",
+   "topic": "缺陷等级定义",
+   "date": "2026-09-01 10:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_xuli",
+     "text": "大家，咱们先统一下缺陷等级定义，方便后续跟踪和处理。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "@u_xuli 有定义吗？",
+     "reply_to": 0,
+     "mentions": [
+      "u_xuli"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "有，我这边整理了下，S1 至命，S2 严重，S3 一般，S4 建议。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "那具体怎么定义呢？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "S1 是核心功能不可用或数据丢失，必须 4 小时内修复。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "明白了，那 S2 是什么情况？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "S2 是主要功能异常，修复时间 1 个工作日。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "S3 和 S4 呢？",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "S3 是一般功能影响，3 个工作日处理；S4 是建议类，排期处理。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "+1，这样比较清晰，方便后续管理。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_chenjing",
+     "text": "没问题，大家按这个标准来提交缺陷。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "收到，后续我会注意等级定义。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "好的，有问题随时沟通。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F031": {
+   "seed_id": "F031",
+   "conv": "c_qa",
+   "topic": "回归测试缺陷截图",
+   "date": "2026-09-24 16:20",
+   "attachment": {
+    "kind": "form",
+    "title": "缺陷 BUG-2317",
+    "fields": [
+     [
+      "标题",
+      "优惠券叠加后实付金额出现负数"
+     ],
+     [
+      "等级",
+      "S1"
+     ],
+     [
+      "模块",
+      "订单结算"
+     ],
+     [
+      "复现步骤",
+      "满100减30券 + 会员积分抵扣 + 新人券同时使用"
+     ],
+     [
+      "指派",
+      "李娜"
+     ],
+     [
+      "状态",
+      "已修复，待回归"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_mafei",
+     "text": "发现一个回归测试的问题，看下截图",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "这个得尽快处理，订单结算模块的",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "已指派给李娜，（见附件） 级别",
+     "reply_to": 0,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "收到，正在排查",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "文档发群里了",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "好的，等修复后安排回归",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "正在确认问题复现路径",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "这个影响范围大吗？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "暂时只影响优惠券叠加的场景",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "+1，尽快定位",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "我发个语音，详细说明",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "语音已收到，正在分析",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "这个 bug 的等级是 （见附件），必须优先处理",
+     "reply_to": 0,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F032": {
+   "seed_id": "F032",
+   "conv": "c_qa",
+   "topic": "自动化测试平台",
+   "date": "2026-10-10 11:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_xuli",
+     "text": "大家好，我们接口自动化测试平台迁移工作进展如何？",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "已经完成了从 Postman 到自研平台的迁移。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "很好，那现在覆盖率是多少？",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "目前覆盖了 412 个接口用例。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "+1，不错。执行时间安排呢？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "每天凌晨 3 点在测试环境自动执行。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "结果会同步到群里吗？",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "是的，执行结果会推送到测试质量群。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "好的，那这个迁移算是顺利完成。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "是的，后续还会持续优化。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xuli",
+     "text": "辛苦了，继续保持。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_mafei",
+     "text": "收到！",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F033": {
+   "seed_id": "F033",
+   "conv": "c_all",
+   "topic": "差旅报销制度",
+   "date": "2026-08-05 09:30",
+   "attachment": {
+    "kind": "pdf",
+    "title": "云岚科技差旅报销管理办法（2026 版）",
+    "sections": [
+     [
+      "住宿标准",
+      "一线城市（北上广深）每晚不超过 600 元，其他城市每晚不超过 400 元；总监及以上级别上浮 30%。"
+     ],
+     [
+      "交通",
+      "高铁二等座、飞机经济舱；单程 5 小时以内优先高铁。"
+     ],
+     [
+      "餐补",
+      "出差期间每天餐补 100 元，无需发票。"
+     ],
+     [
+      "报销时限",
+      "出差结束后 15 个自然日内在 OA 提交报销，超过 60 天不予报销。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_guoxin",
+     "text": "大家注意，差旅报销制度有更新，具体看下截图。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_heping",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "报销单需要附上交通票据，出差结束（见附件）天内提交。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "好的，明白了。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "@u_heping 餐补是每天（见附件）元，不需要发票。",
+     "reply_to": null,
+     "mentions": [
+      "u_heping"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "收到，这个得尽快处理。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "附件是完整的制度说明，大家记得看。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_heping",
+     "text": "已收到，文档发群里了。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "住宿标准有变化，一线城市不超过（见附件）。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_heping",
+     "text": "好的，这个得注意。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "单程5小时以内优先高铁，记得选交通方式。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "+1，这个很关键。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "超过（见附件）天不支持报销，大家注意时间节点。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "收到，会提醒团队。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F035": {
+   "seed_id": "F035",
+   "conv": "c_all",
+   "topic": "年度体检",
+   "date": "2026-09-18 15:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_heping",
+     "text": "各位同事，2026年度体检安排大家注意查收，有不清楚的可以问我。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "@u_heping 何总，体检时间确定了吗？",
+     "reply_to": 0,
+     "mentions": [
+      "u_heping"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "体检时间在10月12日到10月30日之间，具体安排后续会通知。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "好的，那咱们的体检机构是哪家啊？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "是慈铭体检，大家记得提前预约。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "那预约时间呢？",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "需要在9月30日前通过OA系统完成预约，逾期可能就预约不了啦。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "明白了，那家属可以参加吗？",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "@u_guoxin 郭主管，家属可以参加，但需要自费，费用是7折。",
+     "reply_to": 7,
+     "mentions": [
+      "u_guoxin"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "好的，这个信息我也会同步给部门同事。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "辛苦啦，@u_guoxin，记得提醒大家按时预约。",
+     "reply_to": 9,
+     "mentions": [
+      "u_guoxin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "收到！有需要我协助的随时说。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "好的，感谢支持！",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F036": {
+   "seed_id": "F036",
+   "conv": "c_all",
+   "topic": "差旅住宿标准调整",
+   "date": "2026-10-16 10:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_guoxin",
+     "text": "各位同事，关于差旅住宿标准调整的通知，大家有疑问可以提出来。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "@u_guoxin 调整的具体内容是什么？",
+     "reply_to": 0,
+     "mentions": [
+      "u_guoxin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "自 11 月 1 日起，一线城市住宿标准由 600 元提高到 700 元，其他城市由 400 元提高到 450 元。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，那报销时需要按新标准来提交了。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "是的，其他规定不变，大家按照流程执行即可。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "了解了，那我这边会同步给财务团队。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "收到，有疑问随时联系。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "那我先去更新报销模板。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "辛苦了，记得通知相关人员。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，已经同步了。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "那这个调整就先这样，后续有变化会再通知。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，没问题。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "辛苦大家了！",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F037": {
+   "seed_id": "F037",
+   "conv": "c_all",
+   "topic": "办公室WiFi与打印机",
+   "date": "2026-08-24 11:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_guoxin",
+     "text": "各位同事，关于办公室WiFi和打印机的使用，有几点需要统一说明。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "首先，员工WiFi名称是YunLan-Staff，使用企业账号认证，记得登录后才能正常上网。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "访客WiFi是YunLan-Guest，密码每周一更新，会在行政公告里发。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "3楼的打印机IP地址是10.10.3.200，大家打印时记得确认。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "是的，每周一都会在行政公告更新密码，@liuhua。",
+     "reply_to": 6,
+     "mentions": [
+      "u_liuhua"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "如果有其他问题，随时反馈。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F038": {
+   "seed_id": "F038",
+   "conv": "c_sales",
+   "topic": "灵犀报价单",
+   "date": "2026-08-12 16:00",
+   "attachment": {
+    "kind": "xlsx",
+    "title": "灵犀智能客服报价单",
+    "sheets": {
+     "报价": [
+      [
+       "版本",
+       "部署方式",
+       "价格(万元/年)",
+       "包含坐席数",
+       "超出坐席单价(元/月)"
+      ],
+      [
+       "标准版",
+       "SaaS",
+       "18",
+       "20",
+       "260"
+      ],
+      [
+       "专业版",
+       "SaaS",
+       "36",
+       "50",
+       "220"
+      ],
+      [
+       "企业版",
+       "私有化",
+       "88",
+       "不限",
+       "—"
+      ]
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_linfeng",
+     "text": "灵犀报价单发群里了，大家看看",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "收到，我看看",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，等我确认下财务",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "这个得尽快处理",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "标准版 SaaS 的报价是看截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "收到，财务这边先记录下",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "专业版的报价也是看截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，我这边继续核对",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "企业版私有化部署的报价也是看截图",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "这个坐席不限，客户应该会感兴趣",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "嗯，这个可能需要和法务确认",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "有需要我发个语音解释一下",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "好的，先发语音",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "收到，谢谢",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F039": {
+   "seed_id": "F039",
+   "conv": "c_sales",
+   "topic": "客户B保险公司需求",
+   "date": "2026-09-02 11:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_yangxue",
+     "text": "林总，刘总，客户B保险公司有新的需求，需要我们支持保单查询和理赔进度查询功能，你们这边有时间评估吗？",
+     "reply_to": null,
+     "mentions": [
+      "u_linfeng",
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "收到，这个需求挺重要的，先确认下他们的部署要求。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "他们要求私有化部署，并且要通过等保三级，这个我们得提前准备。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "私有化部署没问题，等保三级需要我们在安全模块加一些增强，这事我来牵头。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户B说他们大概会采购企业版，金额在120万左右，由我来跟进。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "120万的商机，不错，杨雪你盯紧进度，有进展随时同步。",
+     "reply_to": 4,
+     "mentions": [
+      "u_yangxue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "等保三级那边，我这边已经联系了安全团队，下周开始准备材料。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "好的，等保材料我这边也同步给客户，确保他们那边能及时审核。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "+1，杨雪你这边继续保持沟通，把客户需求再明确下。",
+     "reply_to": 4,
+     "mentions": [
+      "u_yangxue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "企业版功能方面，我这边已经列了需求清单，等你们确认后再推进。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "林总，刘总，需求已经确认，我会持续跟进客户反馈。",
+     "reply_to": 8,
+     "mentions": [
+      "u_linfeng",
+      "u_liuyang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好，保持沟通，争取拿下这个大单。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F040": {
+   "seed_id": "F040",
+   "conv": "c_sales",
+   "topic": "折扣审批规则",
+   "date": "2026-09-29 15:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_linfeng",
+     "text": "方磊，杨雪，关于折扣审批规则，咱们是不是得统一一下？",
+     "reply_to": null,
+     "mentions": [
+      "u_fanglei",
+      "u_yangxue"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "林总，我记得合同金额超过50万的，财务得参与评审。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "对，而且折扣审批规则好像也有不同。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "是的，9折以内我就能审批，8折到9折的话，得等宋总签字。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "那低于8折的，是不是原则上不能同意？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "对头，这点我记得很清楚。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "对，而且如果合同金额超过50万，方磊你得参与评审。",
+     "reply_to": 1,
+     "mentions": [
+      "u_fanglei"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "收到，那我这边会留意合同金额。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "明白了，那我可以提前确认一下客户要求。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好的，有问题及时沟通。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，我们保持同步。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "": "",
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "好的，+1。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F041": {
+   "seed_id": "F041",
+   "conv": "c_sales",
+   "topic": "客户A银行续约",
+   "date": "2026-10-21 10:00",
+   "attachment": {
+    "kind": "audio",
+    "text": "林总，A 银行那边信息科的王处长今天口头确认了，明年要把灵犀扩展到信用卡中心，坐席从三十个增加到八十个，预算大概在六十万左右，让我们十一月十号前出正式方案。"
+   },
+   "messages": [
+    {
+     "speaker": "u_yangxue",
+     "text": "杨雪：客户A银行续约相关进展，有语音汇报，大家看看。",
+     "reply_to": null,
+     "mentions": [
+      "u_linfeng"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "收到，先看看语音内容。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好的，这个得尽快处理。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "林峰，方案要11月10日前出，咱们得抓紧。",
+     "reply_to": 0,
+     "mentions": [
+      "u_linfeng"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "+1，时间不等人。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户提到坐席从（见附件）个增加到（见附件）个，预算约（见附件）万。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好的，这个预算范围我们得评估清楚。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "另外，客户想把灵犀扩展到信用卡中心。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "了解，这个扩展方向挺关键的。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户是口头确认，得尽快跟进确认。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "嗯，尽快确认，避免后续问题。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "方案出来后记得同步给法务和财务。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_linfeng",
+     "text": "好的，同步流程没问题。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "有需要我发个截图吗？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F042": {
+   "seed_id": "F042",
+   "conv": "c_onboard",
+   "topic": "开发环境搭建指南",
+   "date": "2026-08-17 10:00",
+   "attachment": {
+    "kind": "docx",
+    "title": "后端新人开发环境搭建指南",
+    "sections": [
+     [
+      "1 账号申请",
+      "入职当天在 OA 提交 GitLab、Jira、VPN 三个账号申请，审批人为直属主管，一般 1 个工作日开通。"
+     ],
+     [
+      "2 本地环境",
+      "JDK 17、Maven 3.9、Docker Desktop；IDE 推荐 IntelliJ IDEA，公司提供正版授权。"
+     ],
+     [
+      "3 代码仓库",
+      "主仓库地址 git.yunlan.internal/backend，分支规范：feature/xxx 开发，release/x.y 发布，禁止直接推送 main。"
+     ],
+     [
+      "4 测试环境",
+      "测试环境数据库只读账号在 Vault 中获取，路径 secret/test/db-readonly。"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_lina",
+     "text": "大家好，欢迎加入云岚智能科技！我是李娜，后端组的，有啥问题尽管问。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "谢谢李姐！我是肖晨，今天刚入职。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "肖晨，欢迎！开发环境搭建有疑问随时问我。",
+     "reply_to": 1,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "肖晨，开发环境搭建指南我发群里了，记得查收。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "收到，李姐，我先看看。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "肖晨，记得在 OA 申请 GitLab、Jira、VPN 账号，主管审批后大概一天内会开通。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "明白了，那我先去 OA 申请。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "肖晨，本地环境需要 JDK （见附件）、Maven （见附件）、Docker Desktop，记得安装好。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，这些都准备好了。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "代码仓库是 git.yunlan.internal/backend，开发分支用 feature/xxx，发布用 release/x.y，不能直接推 main。",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "这个得尽快处理，我看看文档。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "文档发群里了，大家查收。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "收到，谢谢李姐！",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "测试库只读账号在 Vault 的 secret/test/db-readonly 路径下，记得查看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    }
+   ]
+  },
+  "F043": {
+   "seed_id": "F043",
+   "conv": "c_onboard",
+   "topic": "VPN连接问题",
+   "date": "2026-08-18 15:30",
+   "attachment": {
+    "kind": "form",
+    "title": "YunLan VPN 客户端",
+    "fields": [
+     [
+      "状态",
+      "连接失败"
+     ],
+     [
+      "错误",
+      "Error 809: 网络连接被防火墙阻止"
+     ],
+     [
+      "服务器",
+      "vpn.yunlan.internal"
+     ],
+     [
+      "协议",
+      "L2TP/IPsec"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_xiaochen",
+     "text": "大家好，我这边连接VPN的时候遇到了问题，提示Error 809，网络连接被防火墙阻止。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "@u_xiaochen 你好，Error 809一般是防火墙或网络策略限制导致的，你用的是哪个VPN服务器？",
+     "reply_to": 0,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "用的是vpn.yunlan.internal，协议是L2TP/IPsec。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "明白了，L2TP/IPsec在部分网络环境下容易被拦截。建议你先尝试改用OpenVPN配置。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，那我先试试OpenVPN。不过配置文件在哪里下载？",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "@u_xiaochen 配置文件已经在OA上更新，你可以去下载新版的OpenVPN客户端。",
+     "reply_to": 4,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "收到，正在去OA下载客户端。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "辛苦了，下载完成后记得检查一下配置是否正确。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，下载完成，正在配置。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "附件是截图，显示我现在连接的状态。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "@u_xiaochen 看一下截图，确认一下配置文件是否加载正确。",
+     "reply_to": 9,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "配置文件已经加载，但还是连不上。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_huangtao",
+     "text": "那可能是网络策略问题，建议你联系网络组确认一下。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，我这就联系。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F044": {
+   "seed_id": "F044",
+   "conv": "c_onboard",
+   "topic": "导师制度",
+   "date": "2026-08-20 11:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_heping",
+     "text": "大家好，新人入职交流群已建立，欢迎加入！",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，我刚进群，先自我介绍一下，我是肖晨，新入职的后端工程师。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "欢迎肖晨！我是李娜，后端工程师，也是你的导师。",
+     "reply_to": 1,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "太好了，李娜老师，那以后有什么问题都可以找你了！",
+     "reply_to": 2,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "没问题，我就是你的导师，试用期3个月，每两周一次1对1沟通。",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "收到，那我先准备一下开发环境，有问题就找你！",
+     "reply_to": 4,
+     "mentions": [
+      "u_lina"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "对，开发环境搭建有疑问随时问我，我们团队也支持远程协作。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "补充一下，新人导师制度已经上线，每位新人配一名导师，试用期3个月。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "好的，我明白了，会积极跟进，有问题及时沟通！",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "辛苦了，有问题随时找我！:+1:",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "另外，账号权限申请流程已发布，记得按照指引操作。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_xiaochen",
+     "text": "了解，我会尽快完成权限申请。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_lina",
+     "text": "好的，我这边也会协助你，有任何问题直接@我。",
+     "reply_to": 11,
+     "mentions": [
+      "u_xiaochen"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "感谢大家的配合，祝大家工作顺利！",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F045": {
+   "seed_id": "F045",
+   "conv": "c_mgmt",
+   "topic": "B轮融资进展",
+   "date": "2026-08-25 20:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_songyu",
+     "text": "B轮融资进展如何了？@u_tangming @u_fanglei",
+     "reply_to": null,
+     "mentions": [
+      "u_tangming",
+      "u_fanglei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "这边技术评估已经完成，星海资本领投，投前估值 8 亿。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "财务这边也确认了，计划融资 1.5 亿，预计 11 月底完成交割。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "好的，那整体进展顺利，继续推进。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "+1，技术端没问题，可以继续配合。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "收到，财务流程已经启动，会尽快推进。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "继续跟进，有进展及时同步。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "没问题，已经安排专人对接星海资本。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "预计交割时间没问题，我们也在准备相关文件。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "好的，保持沟通，确保不出问题。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "这边没问题，随时可以启动下一阶段。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "文件准备好了，随时可以提交。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "太好了，继续保持节奏。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F046": {
+   "seed_id": "F046",
+   "conv": "c_mgmt",
+   "topic": "年度调薪预算",
+   "date": "2026-09-15 21:00",
+   "attachment": {
+    "kind": "xlsx",
+    "title": "2027年度调薪预算",
+    "sheets": {
+     "预算": [
+      [
+       "部门",
+       "人数",
+       "调薪比例",
+       "预算(万元)"
+      ],
+      [
+       "研发",
+       "45",
+       "8%",
+       "216"
+      ],
+      [
+       "产品",
+       "8",
+       "6%",
+       "29"
+      ],
+      [
+       "销售",
+       "15",
+       "5%",
+       "45"
+      ],
+      [
+       "职能",
+       "10",
+       "4%",
+       "14"
+      ]
+     ]
+    }
+   },
+   "messages": [
+    {
+     "speaker": "u_songyu",
+     "text": "年度调薪预算讨论，大家看看附件。",
+     "reply_to": null,
+     "mentions": [
+      "u_heping",
+      "u_fanglei"
+     ],
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_heping",
+     "text": "收到，我看看。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "预算数据没问题，但得注意执行节奏。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "我发个语音，详细说下研发和产品部。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "好的，我这边也同步下销售和职能。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "这个得尽快处理，别拖到月底。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "@u_songyu 宋总，这个得和你确认下预算分配。",
+     "reply_to": 0,
+     "mentions": [
+      "u_songyu"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "明白，我们同步下财务部。",
+     "reply_to": 6,
+     "mentions": [
+      "u_fanglei"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "研发预算没问题，但要控制在 （见附件） 万内。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "产品部预算 （见附件） 万，这个得确认下人数。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "销售部 （见附件） 万，职能部 （见附件） 万，没问题。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "确认下所有数据，别有误差。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_fanglei",
+     "text": "好的，我这边也同步下各部门。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "大家辛苦了，尽快推进。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F047": {
+   "seed_id": "F047",
+   "conv": "c_mgmt",
+   "topic": "组织架构调整",
+   "date": "2026-10-12 19:30",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_songyu",
+     "text": "大家，关于组织架构调整，我这边初步有了个想法，想听听大家意见。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "宋总，你先说说看，我们这边技术上有没有什么需要特别注意的地方？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "我们计划在 2027 年 1 月成立 AI 平台部，由张伟负责。周杰和灵犀算法团队并入该部门。",
+     "reply_to": 0,
+     "mentions": [
+      "u_tangming"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "明白了，那后端团队怎么安排？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "后端团队由李娜接任负责人，她之前带过几个项目，应该没问题。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "好的，那这个架构调整先这样定下来，后续再细化。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "+1，我这边可以协调资源支持 AI 平台部的组建。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "我这边会同步人事系统，确保团队转移顺利。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "辛苦了，大家确认下这个调整是否可行？",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_tangming",
+     "text": "收到，我这边没问题。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_heping",
+     "text": "我也确认，没问题。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_songyu",
+     "text": "好，那这个方案就先定下来，后续逐步推进。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F048": {
+   "seed_id": "F048",
+   "conv": "c_backend",
+   "topic": "灵犀接口限流配置",
+   "date": "2026-09-29 11:20",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_wangqiang",
+     "text": "灵犀对外问答接口限流配置现在是什么样的？",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "@u_wangqiang 你记得吗？之前你说过是单租户每秒50次，突发100次。",
+     "reply_to": 0,
+     "mentions": [
+      "u_wangqiang"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "对的，就是单租户每秒50次，突发100次，超限返回400429。这个配置是我在Redis+令牌桶上实现的。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "好的，那这个限流策略有没有考虑过突发流量的冲击？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "考虑过了，突发100次是允许的，这样可以应对短时间的流量高峰。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "是的，配置是基于Redis的令牌桶算法，用Lua脚本实现的，确保了线程安全。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "明白了，这个设计挺合理的。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "+1，王强，这个配置没问题，继续维护。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "收到，有问题随时沟通。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "有没有可能把突发流量调大一点？",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhangwei",
+     "text": "先别急，目前的配置是经过测试的，如果要调整，得先评估压力。",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_wangqiang",
+     "text": "明白，现在这个配置已经稳定运行了一段时间，没有问题。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhoujie",
+     "text": "好的，继续关注这个接口的性能。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F049": {
+   "seed_id": "F049",
+   "conv": "c_lingxi",
+   "topic": "优化版本交付",
+   "date": "2026-10-14 18:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_liuyang",
+     "text": "灵犀优化版本准备交付客户了，大家确认下进度。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "前端部分已经完成，测试也通过了，可以交付。",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "客户那边反馈不错，特别是账单类回答变短了。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "那版本号确定是 v1.0.3 吗？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "是的，v1.0.3，已经打包好，等你确认。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "@u_zhaomin 信用卡账单类回答控制在 150 字以内，客户很满意。",
+     "reply_to": 4,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "好的，那交付时间定在 10 月 14 日对吗？",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "是的，明天就发给客户 A 银行。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "转人工按钮改成右下角的悬浮红色按钮了？",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "是的，已经调整好了，视觉更明显。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "确认一下，这个版本是否符合验收标准？",
+     "reply_to": 9,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_yangxue",
+     "text": "+1，客户反馈整体不错，应该没问题。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，那我准备发版邮件。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_liuyang",
+     "text": "辛苦了，记得同步给客户成功团队。",
+     "reply_to": 12,
+     "mentions": [
+      "u_yangxue"
+     ],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F050": {
+   "seed_id": "F050",
+   "conv": "c_frontend",
+   "topic": "前端监控接入",
+   "date": "2026-10-19 14:00",
+   "attachment": null,
+   "messages": [
+    {
+     "speaker": "u_sunhao",
+     "text": "赵敏姐，前端监控接入这块我这边已经搞定了，咱们统一用 Sentry 做错误监控。",
+     "reply_to": null,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "好的，那采样率设置成多少？",
+     "reply_to": 0,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "生产环境采样率设为 20%，测试环境暂时不开启。",
+     "reply_to": 1,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "明白了，那 source map 的处理方式呢？",
+     "reply_to": 2,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "source map 只上传到 Sentry，不随产物发布。",
+     "reply_to": 3,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，这样安全性更高。",
+     "reply_to": 4,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "是的，而且目前都是我负责接入，后续如果有问题我这边跟进。",
+     "reply_to": 5,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "+1，有需要随时沟通。",
+     "reply_to": 6,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "好的，那我先把配置发群里，大家看看有没有问题。",
+     "reply_to": 7,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "收到，等你发配置。",
+     "reply_to": 8,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "赵敏姐，我这边配置已经发群里了，你看看有没有需要调整的地方。",
+     "reply_to": 9,
+     "mentions": [
+      "u_zhaomin"
+     ],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "好的，我先看看。",
+     "reply_to": 10,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_sunhao",
+     "text": "那我先去忙其他事情了，有问题随时叫。",
+     "reply_to": 11,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_zhaomin",
+     "text": "好的，辛苦啦。",
+     "reply_to": 12,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  },
+  "F034": {
+   "seed_id": "F034",
+   "conv": "c_all",
+   "topic": "国庆放假通知",
+   "date": "2026-09-10 10:00",
+   "attachment": {
+    "kind": "form",
+    "title": "2026年国庆节放假安排",
+    "fields": [
+     [
+      "放假时间",
+      "10月1日（周四）至10月8日（周四），共8天"
+     ],
+     [
+      "调休上班",
+      "9月27日（周日）、10月10日（周六）"
+     ],
+     [
+      "值班安排",
+      "SRE 按值班表轮值，值班表见运维群"
+     ],
+     [
+      "注意事项",
+      "离开工位请关闭电源，节后第一天 10:00 前打卡不计迟到"
+     ]
+    ]
+   },
+   "messages": [
+    {
+     "speaker": "u_guoxin",
+     "text": "国庆放假通知发群里啦，大家注意查收。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "",
+     "attachment": true,
+     "key": true
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "节后第一天10点前打卡不计迟到，这个要提醒大家。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "文档发群里了，大家查收。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    },
+    {
+     "speaker": "u_guoxin",
+     "text": "请务必按时打卡，特别是节后第一天。",
+     "reply_to": null,
+     "mentions": [],
+     "attachment": false,
+     "key": false
+    }
+   ]
+  }
+ },
+ "noise": {
+  "c_backend": [
+   {
+    "topic": "订会议室",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家有空吗？我明天下午三点要开个会，订个会议室吧。",
+      "reply_to": null,
+      "mentions": [
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我下午有课，可能赶不上，你先订吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "我这边没问题，你订哪个会议室？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我这边也可以，你直接订吧，我来配合。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_xiaochen",
+      "text": "老张，你这周报还没发，快点啊。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "啊，我昨晚加班写完，今天早上才发出去，你别急。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我这边已经发了，你这边尽快发一下吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_huangtao",
+      "text": "我等你发完再发，不用催了。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_zhoujie",
+      "text": "中午吃什么？我带了饭，要不要来点？",
+      "reply_to": null,
+      "mentions": [
+       "u_xiaochen",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "我今天不想吃食堂，你带的饭可以分我点吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "我今天想吃点辣的，你带的够不够？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我今天也带了饭，大家一起吃吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "大家注意，我今天临时请假，下午的会议可能没法参加了。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhoujie",
+       "u_xiaochen"
+      ]
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "那你记得把会议内容同步一下，别耽误大家进度。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "好的，那你注意休息，有什么事随时说。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "请假要提前说，下次记得早点通知。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_zhoujie",
+      "text": "大家谁有空？我这边需要订个会议室开个会，下午三点左右。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "我下午三点可以，但得先确认一下我那边的会议有没有冲突。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我三点有课，可能得改时间。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "那大家看看有没有其他时间段合适的？或者我直接订个会议室，大家临时调整时间？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_wangqiang",
+       "u_xiaochen"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "中午大家约个地方吃吗？我这边订了附近那家湘菜馆。",
+      "reply_to": null,
+      "mentions": [
+       "u_xiaochen",
+       "u_huangtao",
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "行啊，我中午就去，但得先确认下是否还有位置。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_huangtao",
+      "text": "我中午有事，可能得带饭。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "那就先订个位置，大家来得早的可以先坐。",
+      "reply_to": null,
+      "mentions": [
+       "u_xiaochen",
+       "u_huangtao",
+       "u_zhangwei"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家注意，我今天临时有个紧急会议，可能要请假半天，下午的会议可能要改时间。",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_lina",
+       "u_xiaochen"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "那下午的会议你这边能提前说下改到什么时候吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我这边可以改时间，但可能得调一下工作内容。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好的，我稍后发个消息说明具体情况。",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_lina",
+       "u_xiaochen"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "团建投票",
+    "conv": "c_backend",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "大家看看，这个周末团建去哪？我这边发了几个选项，大家投票一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhoujie",
+       "u_zhangwei",
+       "u_lina",
+       "u_xiaochen"
+      ]
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我去过那个温泉度假村，大家去那里应该挺不错。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "那地方太远了，我可能不太方便去。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "那大家有没有其他建议？比如市区附近或者近郊的？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhoujie",
+       "u_lina",
+       "u_xiaochen"
+      ]
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_frontend": [
+   {
+    "topic": "订会议室",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家有空吗？下午三点需要订个会议室开个会，临时通知的。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_sunhao",
+       "u_chenjing",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我下午三点有事，能不能换个时间？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我三点可以，但得确认一下会议室是否还有空位。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好的，那我先订个三点的，如果有人冲突就再调整。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "各位，周报还没交的麻烦今天下班前发一下，我这边要汇总。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_sunhao",
+       "u_chenjing",
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我这边已经写好了，正在排版，马上发。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我这边还没开始写，估计要晚点发，抱歉。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我明天才写，周报要下周的嘛？",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "中午吃什么？我订了麻辣烫，要人一起拼单吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_sunhao",
+       "u_chenjing",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我也可以，但得先确认一下有没有位置，我之前订了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我中午不饿，可能就不去了，你们吃吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我这边要加班，不吃了，谢谢。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家有空吗？我需要订个会议室开个会，明天下午三点。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_sunhao",
+       "u_chenjing",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我下午有事，不能参加，可以换个时间吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "那我先订个会议室，等你回复我再确认时间。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭时间",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_chenjing",
+      "text": "中午吃什么？附近有新开了家川菜馆，推荐一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_sunhao",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我昨天吃多了，今天不想吃太辣的。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我带了便当，可以一起吃吗？",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递到货",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_sunhao",
+      "text": "快递到了，快递员说放门口了，我还没去拿。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_chenjing",
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我刚刚看到门口有快递，应该是你的吧？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "那我先去拿吧，你记得签收哈。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "今天下午要请假一下，家里有点事，可能要提前走。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_sunhao",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好，那你记得提前走，别耽误工作。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我这边暂时没有任务，你放心去吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭时间",
+    "conv": "c_frontend",
+    "messages": [
+     {
+      "speaker": "u_zhaomin",
+      "text": "中午大家在哪儿吃？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我打算去楼下那家新开的餐厅，听说他们家的烤鱼不错。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我也想去，不过得先处理完手头的 bug，你们等我一下。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "那我先订个位子，大家记得带好筷子。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "行，我一会儿就过去，顺便带瓶饮料。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_product": [
+   {
+    "topic": "订会议室",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_liuyang",
+      "text": "大家有空吗？下午三点我这边要开个会，订个会议室吧。",
+      "reply_to": null,
+      "mentions": [
+       "u_chenjing",
+       "u_zhangwei",
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我下午三点有事，可能得换个时间。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "那我们改到四点吧，大家看看有没有冲突？",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_yangxue",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "四点可以，我这边没问题。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "小张，你这周的周报还没交吧？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "啊，我这周忙得有点乱，下周交吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "不行不行，下周也得交，别拖。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_yangxue"
+      ]
+     },
+     {
+      "speaker": "u_xuli",
+      "text": "我这边下周也要交，别催了，我们统一下周五交吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_zhaomin",
+      "text": "中午吃什么？我去楼下吃个便当。",
+      "reply_to": null,
+      "mentions": [
+       "u_chenjing",
+       "u_liuyang",
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我不去楼下，我想吃火锅。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "我也不去楼下，我带了外卖。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_yangxue"
+      ]
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "那我们各自解决吧，别凑一块了。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "生日祝福",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "小杨，你生日快乐！今天过得开心嘛？",
+      "reply_to": null,
+      "mentions": [
+       "u_yangxue"
+      ]
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "谢谢，今天挺开心的，大家祝福我一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_liuyang",
+       "u_zhangwei",
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "生日快乐！祝你心想事成，万事如意！",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "生日快乐！愿你每天都开心！",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家有没有空的会议室？下周三下午开会。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "我这边周三下午有事，不能参加，你们安排其他时间吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "那我看看有没有空的会议室，你们等我消息。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "行，等你消息。我这边周三下午能来。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_yangxue",
+      "text": "中午吃什么？老规矩，AA制。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xuli",
+      "text": "我带了外卖，谁要一起吃？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我今天不想吃外卖，要不我们找个附近的小馆？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "好啊，我也可以。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_zhaomin",
+      "text": "我昨天下单的快递到货了吗？还没收到。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xuli",
+      "text": "我这边昨天下午就收到了，可能你那边延迟了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "那我再查一下物流信息，看看有没有异常。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "行，等你查完，我这边也联系快递那边。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "请假",
+    "conv": "c_product",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "我明天下午有事，可能要临时请假一下。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "行啊，记得提前报备一下，方便安排工作。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "那你明天能处理完手头的活吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "应该没问题，我会提前交接一下。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_sre": [
+   {
+    "topic": "订会议室",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "大家下午三点有个会议，麻烦订个会议室。",
+      "reply_to": null,
+      "mentions": [
+       "u_wuyue",
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_wuyue",
+      "text": "我这边下午三点有事，可以改到四点吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "四点的会议室订好了，等你确认一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_wuyue"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_lina",
+      "text": "中午大家要不要一起吃个便当？",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "我中午有事，先不去了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "那我带点饭过去，大家分着吃。",
+      "reply_to": null,
+      "mentions": [
+       "u_lina"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递到货",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_wuyue",
+      "text": "快递小哥说今天下午三点会送到，大家注意查收。",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_lina"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "收到快递了，谢谢！",
+      "reply_to": null,
+      "mentions": [
+       "u_wuyue"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "今天下午有事，可能要临时请假一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "那工作内容先交接一下，我这边可以帮忙。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "好，你先处理，我这边会跟进。",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_wangqiang",
+      "text": "大家有空吗？下午三点想订个会议室开个会，方便的话先举个手。",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_wuyue",
+       "u_zhangwei",
+       "u_lina",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我三点有课，可能得晚点。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我三点可以，会议室选哪个？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_wuyue",
+      "text": "选101吧，我之前用过挺顺手的。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "各位，周报记得周五前发我哈，我好汇总。",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_wuyue",
+       "u_zhangwei",
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "上周的周报还没发呢，我这边赶着做实验，下周一发吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我昨天发了，你没看到？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我这边今天发，别催了，我刚忙完。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "中午食堂吃饭吗？还是大家自己带？",
+      "reply_to": null,
+      "mentions": [
+       "u_wuyue",
+       "u_zhangwei",
+       "u_lina",
+       "u_wangqiang",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_wuyue",
+      "text": "食堂今天好像没供应套餐，可能要自己带。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我带了饭，你们要是不饿就别浪费。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我今天不想吃食堂，带了便当。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_sre",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "快递到啦，我收到了，是给我的，你们谁的？",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_wuyue",
+       "u_zhangwei",
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "应该是我的，你帮我签个收吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我昨天下单的，应该还没到。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我今天没下单，可能是我同事的。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_lingxi": [
+   {
+    "topic": "订会议室",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家看一下这个会议室的预订情况，明天下午三点我这边有个会，麻烦帮忙确认一下有没有空位。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhoujie",
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我看看，好像303和401都空着，你选哪个？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我这边也刚好有会议，要不咱们选401吧，我这边可以调整时间。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好的，401就定下来吧，我稍后发个日程提醒大家。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_yangxue",
+      "text": "中午大家想吃什么？我这边订个外卖吧，大家选菜。",
+      "reply_to": null,
+      "mentions": [
+       "u_linfeng",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "我吃麻辣香锅，你们有什么推荐的？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我吃宫保鸡丁，老板你负责点菜，我们打个配合。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "好的，我点一份麻辣香锅，一份宫保鸡丁，再来点凉菜和饮料，大家分着吃。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递到货",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "快递小哥说今天下午两点左右到，你们有谁在公司吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_zhoujie"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我下午三点有会，估计没时间去取。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我下午两点左右在办公室，我去取吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xuli",
+      "text": "好的，麻烦你了，记得签收后拍个照发群里。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "生日祝福",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_linfeng",
+      "text": "今天是u_zhaomin的生日，祝你生日快乐！",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "谢谢大家的祝福！今天中午请大家吃火锅！",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_yangxue"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好啊，我刚好有空，火锅见！",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "我也去，记得带够辣的，我吃辣的！",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家看一下明天下午3点的会议，会议室我订好了，是3楼的A会议室。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "好的，那我提前10分钟过去准备一下材料。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "没问题，我这边也准备好了，记得带投影仪。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "投影仪我带了，不过今天有点卡顿，提前测试一下吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭时间",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "中午大家去哪吃饭？我这边订了附近那家湘菜馆。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "湘菜馆听起来不错，我过去。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我不太吃辣，有不辣的吗？",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "团建投票",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_zhoujie",
+      "text": "大家看一下，团建活动我们准备了两个选项，票选一下。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "户外徒步和室内密室，我个人倾向密室，比较刺激。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xuli",
+      "text": "我更喜欢户外，可以运动一下，但得看天气。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我俩都行，不过还是密室吧，我听说有解谜的环节。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_lingxi",
+    "messages": [
+     {
+      "speaker": "u_linfeng",
+      "text": "今天临时请假，家里有点事，可能下午不能来上班。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好的，你注意安全，有需要帮忙的随时说。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "没事，你别太担心，有事随时联系。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "你要是赶不上会议，我帮你记录一下重点。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_qa": [
+   {
+    "topic": "订会议室",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_sunhao",
+      "text": "大家下午三点有没有空，我需要订个会议室开个会。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_mafei",
+       "u_lina",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我三点有课，可能得改时间。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "我三点可以，但要看看有没有空会议室。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我三点可以，会议室要提前订哦。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "中午吃什么？我带了饭。",
+      "reply_to": null,
+      "mentions": [
+       "u_sunhao",
+       "u_mafei",
+       "u_lina",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我吃外卖，你们有没有推荐的？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "我中午可能去吃火锅，你们要不要一起去？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我吃食堂，大家还是各吃各的吧。",
+      "reply,": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_chenjing",
+      "text": "我的快递今天到了，但还没收到，你们有看到吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_mafei",
+       "u_lina",
+       "u_sunhao"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我昨天就收到了，可能你的快递被误投了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我也刚收到，应该没问题，你再等等。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "我今天下午去快递点看看，你们也去看看吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_lina",
+      "text": "我今天临时请假，下午的会议可能来不了，麻烦大家理解一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_mafei",
+       "u_sunhao",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "好，那你明天补上会议内容吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "你记得提前跟领导报备啊。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "明白了，辛苦了，注意休息。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_sunhao",
+      "text": "大家有空吗？下周三下午三点我需要订个会议室开个会，大家看看时间合适不。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_mafei",
+       "u_lina",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我下周三下午三点有课，不太方便。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我那会儿刚好有事，可以换个时间吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "我那会儿可以，你订个会议室吧，我来确认下。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "小刘，你这周的周报还没交，别拖了。",
+      "reply_to": null,
+      "mentions": [
+       "u_mafei"
+      ]
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "我这周忙得有点多，下周一开始交吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "小刘，周报是不是又忘了？我这边需要你那边的数据。",
+      "reply_to": null,
+      "mentions": [
+       "u_mafei"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_sunhao",
+      "text": "中午吃什么？我看楼下那家饭堂今天有红烧肉。",
+      "reply_to": null,
+      "mentions": [
+       "u_xuli",
+       "u_mafei",
+       "u_lina",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我觉得还是吃外卖吧，不想排队。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我中午要赶项目，就不吃了，你们自己点。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "那我点个炒饭吧，别太重口味。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_qa",
+    "messages": [
+     {
+      "speaker": "u_xuli",
+      "text": "大家注意，我临时请假一下，今天下午不能来上班。",
+      "reply_to": null,
+      "mentions": [
+       "u_mafei",
+       "u_lina",
+       "u_sunhao",
+       "u_chenjing"
+      ]
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "怎么没提前说？你这个临时请假太突然了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "你要是有事，提前说一声，我们也好安排。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_mafei",
+      "text": "好啦好啦，你先休息，有事再通知。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_all": [
+   {
+    "topic": "订会议室",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家注意，明天下午3点的会议我订好了会议室，就在3楼B区。",
+      "reply_to": null,
+      "mentions": [
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "好的，辛苦了，我这边会准时到场。",
+      "reply_to": "u_zhangwei",
+      "mentions": []
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "谢谢张伟，我这边也准备好了材料。",
+      "reply_to": "u_zhangwei",
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhaomin",
+      "text": "中午大家想吃点啥？我订了两家外卖，想看看大家意见。",
+      "reply_to": null,
+      "mentions": [
+       "u_sunhao",
+       "u_zhoujie"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我吃麻辣烫吧，你订的哪家？",
+      "reply_to": "u_zhaomin",
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我也是麻辣烫，但得加鸡腿！",
+      "reply_to": "u_zhaomin",
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递到货",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_chenjing",
+      "text": "快递员说我的包裹今天下午就到，应该不会晚。",
+      "reply_to": null,
+      "mentions": [
+       "u_liuyang"
+      ]
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "好的，我这边下午有空，可以帮忙签收吗？",
+      "reply_to": "u_chenjing",
+      "mentions": []
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "没问题，我到时候给你发个照片。",
+      "reply_to": "u_liuyang",
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhoujie",
+      "text": "今天网络又卡了，我这边视频开不了，谁有办法？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin",
+       "u_sunhao"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我这里没问题，可能是你那边的问题。",
+      "reply_to": "u_zhoujie",
+      "mentions": []
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我这边也卡，看来是公司网络问题。",
+      "reply_to": "u_zhoujie",
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家看下明天下午三点的会议，会议室订好了吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_lina",
+       "u_wangqiang"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我刚订了，是3楼的会议室，你们记得提前10分钟过去",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "好的，那我带资料过去，别忘了投影仪",
+      "reply_to": null,
+      "mentions": [
+       "u_lina",
+       "u_zhangwei"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhoujie",
+      "text": "中午大家有没有订外卖的？",
+      "reply_to": null,
+      "mentions": [
+       "u_chenjing",
+       "u_liuyang"
+      ]
+     },
+     {
+      "speaker": "u_chenjing",
+      "text": "我订了麻辣烫，你们有推荐的吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhoujie"
+      ]
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "我打算去楼下那家炒菜馆，大家要不要一起？",
+      "reply_to": null,
+      "mentions": [
+       "u_chenjing",
+       "u_zhoujie"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递通知",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhaomin",
+      "text": "快递到货了，大家注意查收，记得签收",
+      "reply_to": null,
+      "mentions": [
+       "u_sunhao",
+       "u_zhoujie"
+      ]
+     },
+     {
+      "speaker": "u_sunhao",
+      "text": "我刚收到，是上次买的咖啡机，太棒了！",
+      "reply_to": null,
+      "mentions": [
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_zhoujie",
+      "text": "我这边还没到，可能快递丢了？",
+      "reply_to": null,
+      "mentions": [
+       "u_sunhao",
+       "u_zhaomin"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "团建投票",
+    "conv": "c_all",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "关于团建活动，大家有什么建议吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_zhaomin"
+      ]
+     },
+     {
+      "speaker": "u_wangqiang",
+      "text": "我觉得去郊外露营挺好的，大家有兴趣吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei"
+      ]
+     },
+     {
+      "speaker": "u_zhaomin",
+      "text": "我可以负责订帐篷和食物，大家支持吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_wangqiang",
+       "u_zhangwei"
+      ]
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_sales": [
+   {
+    "topic": "订会议室",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_yangxue",
+      "text": "明天下午三点要开个会，能帮我订个会议室吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "好的，我看看有没有空的会议室，你确定是明天下午三点吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "是的，就是明天下午三点，大概半小时左右，不用太大的会议室。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "好的，我这边订了302会议室，你确认一下时间。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "中午吃什么？我请客。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "你请客？那我就不客气了，吃麻辣香锅！",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "我吃泡面吧，你们吃点好的。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递到货",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_liuyang",
+      "text": "我昨天下单的打印机到货了，快递小哥说今天会送。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "好的，我这边收到快递了，盒子有点破，但东西没问题。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "那我先去签收，你们等我消息，有需要的话通知大家。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "好的，等你消息，我这边也准备签收快递。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_fanglei",
+      "text": "今天下午我临时有事，可能要请假一下。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "什么情况？能说说吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "家人生病了，我得去医院看看，临时请假，麻烦了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "好的，你先处理家里的事情，有什么需要帮忙的尽管说。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_fanglei",
+      "text": "大家看一下明天下午三点的会议，会议室我订好了，是3楼的A会议室。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "好的，我这边下午三点有事，可能要改时间，先说一声。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "那我下午三点可以参加，不过要确认一下是否需要投影仪。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "投影仪我之前用过，没问题，感谢提醒。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭时间",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_linfeng",
+      "text": "中午12点大家准时吃饭，我订了附近那家川菜馆。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好啊，我正好也想吃点辣的，一起。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "那我中午12点准时到，带点零食过去。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "临时请假",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_liuyang",
+      "text": "各位好，我今天临时有事，可能要请假半天，麻烦大家见谅。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "好的，那工作上的事情你先处理一下，有需要帮忙的随时说。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "你先忙，别太赶，事情不急的话可以后天处理。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "那我这边有事的话会提前通知你，你放心。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "团建投票",
+    "conv": "c_sales",
+    "messages": [
+     {
+      "speaker": "u_linfeng",
+      "text": "大家看一下群公告，团建活动开始投票，选择你最想去的地方。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我投三亚，那边风景好，适合放松。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_yangxue",
+      "text": "我投成都，吃火锅、看熊猫，太爽了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_liuyang",
+      "text": "那我投杭州，西湖风景好，适合拍照。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_onboard": [
+   {
+    "topic": "订会议室",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_lina",
+      "text": "大家有空吗？我需要订个会议室开个会，明天下午三点。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我明天下午三点有空，可以订一个。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我也行，哪间会议室？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_huangtao",
+      "text": "我明天下午有事，不能参加，麻烦你们安排。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_xiaochen",
+      "text": "中午吃什么？我带了便当。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我也没带，你愿意请客吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "要不我们去楼下吃个快餐？",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "我快递到了，但是快递员说没有电话联系，我联系不上。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "你有没有发短信或者备注电话？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我记得你发快递的时候是备注了电话的，可能是快递员没看到。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "那你可以去快递点问问，或者等他们联系你。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "团建投票",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "大家有空的话，可以参加团建活动，我们投票一下想去哪。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我投票去爬山，比较休闲。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我投去游乐园，可以玩点刺激的。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我建议还是去郊外露营，大家都能放松。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_zhangwei",
+      "text": "大家有没有空，我明天下午三点需要订个会议室开个会，麻烦帮忙看一下时间有没有冲突。",
+      "reply_to": null,
+      "mentions": [
+       "u_lina",
+       "u_heping"
+      ]
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我明天下午三点有会议，你换个时间吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我下午四点有空，可以吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "好的，那我订下午四点的会议室，大家记得提前十分钟到场。",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_xiaochen"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_xiaochen",
+      "text": "大家周报都提交了吗？我这边还没收到，能不能麻烦各位尽快发我一下。",
+      "reply_to": null,
+      "mentions": [
+       "u_huangtao",
+       "u_lina"
+      ]
+     },
+     {
+      "speaker": "u_huangtao",
+      "text": "我这边今天下午才写完，马上发你。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我这边还没开始写，等我写完马上发。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "好的，辛苦大家了，我这边先看一下你们的周报。",
+      "reply_to": null,
+      "mentions": [
+       "u_heping"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_heping",
+      "text": "中午大家吃什么？我在食堂打饭，有想一起去的吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_lina"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我今天中午有事，不去了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_lina",
+      "text": "我也去，食堂的菜今天不错。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "那我们先去，你稍后也来吧。",
+      "reply_to": null,
+      "mentions": [
+       "u_xiaochen"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递",
+    "conv": "c_onboard",
+    "messages": [
+     {
+      "speaker": "u_huangtao",
+      "text": "我今天收到了一个快递，是某宝发的，应该没人认领，大家看一下有没有人需要。",
+      "reply_to": null,
+      "mentions": [
+       "u_zhangwei",
+       "u_xiaochen"
+      ]
+     },
+     {
+      "speaker": "u_zhangwei",
+      "text": "我好像没下单，可能是别人误寄的。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_xiaochen",
+      "text": "我最近也没下单，这个快递可以留着，我看看有没有人认领。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_huangtao",
+      "text": "好的，等大家确认没人认领就退回去。",
+      "reply_to": null,
+      "mentions": [
+       "u_lina"
+      ]
+     }
+    ],
+    "noise": true
+   }
+  ],
+  "c_mgmt": [
+   {
+    "topic": "订会议室",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_fanglei",
+      "text": "大家看一下明天下午三点的会议，会议室订好了吗？",
+      "reply_to": null,
+      "mentions": [
+       "u_songyu",
+       "u_tangming"
+      ]
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我刚订了303，应该可以，不过要确认下设备是否正常。",
+      "reply_to": "u_fanglei",
+      "mentions": []
+     },
+     {
+      "speaker": "u_songyu",
+      "text": "好的，我这边也通知下参会人员，大家准时到场。",
+      "reply_to": "u_tangming",
+      "mentions": [
+       "u_linfeng"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_linfeng",
+      "text": "周报还没交的，明天中午前交上来啊，我这边要汇总。",
+      "reply_to": null,
+      "mentions": [
+       "u_heping",
+       "u_fanglei"
+      ]
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我昨天加班了，今天早上刚提交，别催了。",
+      "reply_to": "u_linfeng",
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "行吧，辛苦了，但下周开始必须按时交。",
+      "reply_to": "u_heping",
+      "mentions": [
+       "u_songyu"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭安排",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_songyu",
+      "text": "中午要不要一起订个外卖？我这边订个简餐，大家凑合吃。",
+      "reply_to": null,
+      "mentions": [
+       "u_tangming",
+       "u_linfeng"
+      ]
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我中午有会议，可能赶不上，你们先吃。",
+      "reply_to": "u_songyu",
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "那我也不去了，下午要开个会。",
+      "reply_to": "u_tangming",
+      "mentions": [
+       "u_fanglei"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "闲聊",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_fanglei",
+      "text": "快递到了吗？我这边下单的那台设备应该也到了。",
+      "reply_to": null,
+      "mentions": [
+       "u_heping",
+       "u_linfeng"
+      ]
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我这边还没收到，可能物流有点慢。",
+      "reply_to": "u_fanglei",
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "我这边已经签收了，你再确认下快递单号。",
+      "reply_to": "u_heping",
+      "mentions": [
+       "u_songyu"
+      ]
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "订会议室",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "大家看一下明天下午三点的会议，会议室订好了吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "我订了302，但不确定是否可用，你确认下吧。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "我这边也订了302，可能冲突了，麻烦看看怎么处理。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "那我先发个会议通知，等你们确认后再发正式邀请。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "催周报",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_songyu",
+      "text": "张经理，周报还没交，能今天下午前发一下吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_tangming",
+      "text": "我这边下周的计划还没定，等定好就发。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "我这边已经发了，刚发到群里，你看看有没有问题。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "午饭",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_fanglei",
+      "text": "中午有空吗？一起去吃个饭？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我想吃火锅，你们有空吗？",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_linfeng",
+      "text": "我中午可能有事，下次再约。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_songyu",
+      "text": "我中午有空，你们定时间吧。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   },
+   {
+    "topic": "快递",
+    "conv": "c_mgmt",
+    "messages": [
+     {
+      "speaker": "u_tangming",
+      "text": "快递到货了吗？我这边还没收到。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_fanglei",
+      "text": "我收到了，是上周订的那批资料，放在前台了。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_heping",
+      "text": "我这边也收到了，但快递员好像把包裹丢在了楼下。",
+      "reply_to": null,
+      "mentions": []
+     },
+     {
+      "speaker": "u_songyu",
+      "text": "你们都收到的话，我这边再联系快递公司确认一下。",
+      "reply_to": null,
+      "mentions": []
+     }
+    ],
+    "noise": true
+   }
+  ]
+ }
+}

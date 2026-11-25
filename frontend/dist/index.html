@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>EIM-Agent · 企业即时通讯多模态知识检索</title>
+  <link rel="stylesheet" href="vendor/index.css" />
+  <link rel="stylesheet" href="app.css" />
+  <script src="vendor/vue.global.prod.js"></script>
+  <script src="vendor/index.full.min.js"></script>
+  <script src="vendor/marked.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">云岚 IM <span class="sub">（模拟器）· 知识助手“小知”</span></div>
+    <el-radio-group v-model="tab" size="small">
+      <el-radio-button value="im">即时通讯</el-radio-button>
+      <el-radio-button value="admin">管理后台</el-radio-button>
+    </el-radio-group>
+    <div class="me">
+      当前身份：
+      <el-select v-model="userId" size="small" style="width: 210px" @change="onUserChange">
+        <el-option v-for="u in humans" :key="u.user_id" :label="u.name + ' · ' + u.title" :value="u.user_id" />
+      </el-select>
+    </div>
+  </header>
+
+  <!-- ======================= IM ======================= -->
+  <main v-if="tab === 'im'" class="im">
+    <aside class="convs">
+      <div class="conv bot" :class="{active: convId === botConv}" @click="openBot">
+        <div class="avatar botav">知</div>
+        <div><div class="cname">小知（知识助手）</div><div class="cdesc">单聊直接提问</div></div>
+      </div>
+      <div v-for="c in convs" :key="c.conv_id" class="conv" :class="{active: c.conv_id === convId}"
+           @click="selectConv(c.conv_id)">
+        <div class="avatar">{{ c.name.slice(0, 1) }}</div>
+        <div><div class="cname">{{ c.name }}</div><div class="cdesc">{{ c.members.length }} 人</div></div>
+      </div>
+    </aside>
+
+    <section class="chat" v-if="convId">
+      <div class="chat-head">{{ convName }}</div>
+      <div class="msgs" ref="msgBox">
+        <div v-for="m in messages" :key="m.msg_id" :id="'m_' + m.msg_id" class="msg"
+             :class="{mine: m.sender_id === userId, bot: m.sender_id === 'bot_xiaozhi', hl: m.msg_id === highlight}">
+          <div class="avatar" :class="{botav: m.sender_id === 'bot_xiaozhi'}">{{ (m.sender_name || '?').slice(0, 1) }}</div>
+          <div class="body">
+            <div class="meta">{{ m.sender_name }} · {{ fmt(m.ts) }}</div>
+            <div class="bubble">
+              <div v-if="m.reply_to && refText(m.reply_to)" class="quote">{{ refText(m.reply_to) }}</div>
+              <template v-if="m.type === 'image' && m.attachment">
+                <el-image :src="fileUrl(m.attachment)" :preview-src-list="[fileUrl(m.attachment)]" fit="contain" class="img" />
+              </template>
+              <template v-else-if="m.type === 'audio' && m.attachment">
+                <audio :src="fileUrl(m.attachment)" controls></audio>
+              </template>
+              <template v-else-if="m.type === 'file' && m.attachment">
+                <a class="file" :href="fileUrl(m.attachment)" target="_blank">📄 {{ m.attachment.name }}
+                  <span class="fsize">{{ (m.attachment.size / 1024).toFixed(1) }} KB</span></a>
+              </template>
+              <div v-if="m.text" class="text" v-html="renderText(m)"></div>
+              <div v-if="m.card && m.card.citations && m.card.citations.length" class="cites">
+                <div class="cites-title">参考来源（{{ m.card.latency_ms }} ms）</div>
+                <div v-for="c in m.card.citations" :key="c.index" class="cite" @click="jump(c)">
+                  <b>[{{ c.index }}]</b> {{ c.conv_name }} · {{ c.sender }} · {{ fmt(c.ts) }}
+                  <span v-if="c.attachment" class="tag">{{ c.attachment.name }}</span>
+                  <div class="snip">{{ c.snippet.replace(/【[^】]*】[^\n]*\n?/, '').slice(0, 90) }}</div>
+                </div>
+                <div class="fb" v-if="m.card.qa_id">
+                  <el-button size="small" text @click="feedback(m.card.qa_id, 1)">👍 有用</el-button>
+                  <el-button size="small" text @click="feedback(m.card.qa_id, -1)">👎 无用</el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="thinking" class="thinking">小知正在检索与思考…</div>
+      </div>
+      <div class="composer">
+        <el-upload :auto-upload="false" :show-file-list="false" :on-change="onFile">
+          <el-button circle title="发送文件/图片/语音">📎</el-button>
+        </el-upload>
+        <span v-if="pendingFile" class="pending">{{ pendingFile.name }} <a @click="pendingFile = null">×</a></span>
+        <el-input v-model="draft" :placeholder="convId === botConv ? '直接向小知提问…' : '输入消息，@小知 可提问'"
+                  @keyup.enter="send" />
+        <el-button type="primary" @click="send">发送</el-button>
+      </div>
+    </section>
+    <section class="chat empty" v-else>选择一个会话开始</section>
+  </main>
+
+  <!-- ======================= Admin ======================= -->
+  <main v-else class="admin">
+    <div class="stats">
+      <el-card v-for="(v, k) in statCards" :key="k" shadow="never"><div class="sv">{{ v }}</div><div class="sk">{{ k }}</div></el-card>
+    </div>
+    <div class="ops">
+      <el-button type="primary" :loading="ingesting" @click="ingest(false)">增量同步入库</el-button>
+      <el-button :loading="ingesting" @click="ingest(true)">全量重建</el-button>
+      <span v-if="ingestResult" class="ir">{{ ingestResult }}</span>
+    </div>
+    <el-tabs v-model="adminTab">
+      <el-tab-pane label="知识单元（MKU）" name="mku">
+        <div class="filters">
+          <el-select v-model="mkuConv" clearable placeholder="会话" size="small" style="width: 180px" @change="loadMkus">
+            <el-option v-for="c in allConvs" :key="c.conv_id" :label="c.name" :value="c.conv_id" />
+          </el-select>
+          <el-select v-model="mkuKind" clearable placeholder="类型" size="small" style="width: 120px" @change="loadMkus">
+            <el-option label="会话单元" value="dialog" /><el-option label="附件单元" value="attachment" />
+          </el-select>
+          <el-input v-model="mkuQ" placeholder="关键词" size="small" style="width: 200px" @keyup.enter="loadMkus" />
+        </div>
+        <el-table :data="mkus" size="small" height="520">
+          <el-table-column prop="kind" label="类型" width="90" />
+          <el-table-column label="模态" width="150"><template #default="s">{{ s.row.modalities.join(', ') }}</template></el-table-column>
+          <el-table-column prop="title" label="标题" width="200" />
+          <el-table-column label="内容"><template #default="s"><pre class="mkuc">{{ s.row.content }}</pre></template></el-table-column>
+          <el-table-column label="证据消息" width="90"><template #default="s">{{ s.row.evidence.length }}</template></el-table-column>
+          <el-table-column label="ACL" width="130"><template #default="s">{{ s.row.acl.join(', ') }}</template></el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="问答日志与推理轨迹" name="qa">
+        <el-table :data="qaLogs" size="small" height="560" row-key="id">
+          <el-table-column type="expand"><template #default="s"><pre class="trace">{{ JSON.stringify(s.row.trace, null, 1) }}</pre></template></el-table-column>
+          <el-table-column prop="id" label="#" width="60" />
+          <el-table-column prop="user_id" label="用户" width="110" />
+          <el-table-column prop="question" label="问题" width="260" />
+          <el-table-column prop="answer" label="回答" />
+          <el-table-column label="耗时" width="90"><template #default="s">{{ Math.round(s.row.latency_ms) }} ms</template></el-table-column>
+          <el-table-column label="反馈" width="70"><template #default="s">{{ s.row.feedback === 1 ? '👍' : s.row.feedback === -1 ? '👎' : '' }}</template></el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

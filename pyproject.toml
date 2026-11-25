@@ -1,0 +1,26 @@
+[project]
+name = "eim-agent"
+version = "0.1.0"
+description = "Multimodal knowledge retrieval agent for enterprise instant messaging"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "fastapi", "uvicorn[standard]", "pydantic>=2", "pydantic-settings", "httpx", "python-multipart",
+  "pymilvus[milvus_lite]", "sqlalchemy>=2", "jieba", "rank-bm25", "numpy", "pillow",
+  "pymupdf", "python-docx", "python-pptx", "openpyxl", "pandas",
+  "rapidocr-onnxruntime", "langgraph", "langchain-core", "transformers>=4.45",
+  "funasr", "torch", "torchaudio", "modelscope", "tqdm",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "edge-tts"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["backend"]

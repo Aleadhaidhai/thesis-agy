@@ -1,0 +1,122 @@
+{
+ "Ours(full)": {
+  "NMI": 0.9536,
+  "ARI": 0.7867,
+  "1-1": 0.8319,
+  "ExactF1": 0.5381,
+  "n_pred_topics": 93,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.8533,
+   "c_backend": 0.9137,
+   "c_frontend": 0.7917,
+   "c_lingxi": 0.8699,
+   "c_mgmt": 0.803,
+   "c_onboard": 0.8904,
+   "c_product": 0.7576,
+   "c_qa": 0.747,
+   "c_sales": 0.7195,
+   "c_sre": 0.9
+  }
+ },
+ "Ours-w/o-semantic": {
+  "NMI": 0.8883,
+  "ARI": 0.55,
+  "1-1": 0.4757,
+  "ExactF1": 0.029,
+  "n_pred_topics": 491,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.52,
+   "c_backend": 0.4245,
+   "c_frontend": 0.6562,
+   "c_lingxi": 0.4797,
+   "c_mgmt": 0.303,
+   "c_onboard": 0.5205,
+   "c_product": 0.6667,
+   "c_qa": 0.506,
+   "c_sales": 0.2561,
+   "c_sre": 0.3909
+  }
+ },
+ "Ours-w/o-structure": {
+  "NMI": 0.9336,
+  "ARI": 0.7042,
+  "1-1": 0.7474,
+  "ExactF1": 0.3521,
+  "n_pred_topics": 137,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.7733,
+   "c_backend": 0.8705,
+   "c_frontend": 0.7812,
+   "c_lingxi": 0.813,
+   "c_mgmt": 0.697,
+   "c_onboard": 0.8493,
+   "c_product": 0.7778,
+   "c_qa": 0.5542,
+   "c_sales": 0.6098,
+   "c_sre": 0.6545
+  }
+ },
+ "Ours-w/o-time": {
+  "NMI": 0.9612,
+  "ARI": 0.8267,
+  "1-1": 0.8626,
+  "ExactF1": 0.5285,
+  "n_pred_topics": 116,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.96,
+   "c_backend": 0.8993,
+   "c_frontend": 0.7604,
+   "c_lingxi": 0.8943,
+   "c_mgmt": 0.8333,
+   "c_onboard": 0.9315,
+   "c_product": 0.9091,
+   "c_qa": 0.7349,
+   "c_sales": 0.7683,
+   "c_sre": 0.9
+  }
+ },
+ "FixedWindow(10)": {
+  "NMI": 0.8829,
+  "ARI": 0.5425,
+  "1-1": 0.6121,
+  "ExactF1": 0.0643,
+  "n_pred_topics": 119,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.56,
+   "c_backend": 0.6619,
+   "c_frontend": 0.6042,
+   "c_lingxi": 0.6423,
+   "c_mgmt": 0.5909,
+   "c_onboard": 0.6712,
+   "c_product": 0.5859,
+   "c_qa": 0.5542,
+   "c_sales": 0.6098,
+   "c_sre": 0.6
+  }
+ },
+ "TimeGap(30min)": {
+  "NMI": 0.9253,
+  "ARI": 0.6675,
+  "1-1": 0.7241,
+  "ExactF1": 0.3142,
+  "n_pred_topics": 131,
+  "n_gold_topics": 130,
+  "per_conv_1-1": {
+   "c_all": 0.7333,
+   "c_backend": 0.8201,
+   "c_frontend": 0.75,
+   "c_lingxi": 0.7317,
+   "c_mgmt": 0.6212,
+   "c_onboard": 0.8493,
+   "c_product": 0.7677,
+   "c_qa": 0.6386,
+   "c_sales": 0.6341,
+   "c_sre": 0.6364
+  }
+ }
+}

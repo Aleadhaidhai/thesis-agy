@@ -1,0 +1,36 @@
+{
+ "n_queries": 300,
+ "corpus": 11595,
+ "results": {
+  "BM25": {
+   "nDCG@10": 0.7799,
+   "Recall@10": 0.7637,
+   "MRR@10": 0.8817
+  },
+  "Dense": {
+   "nDCG@10": 0.9208,
+   "Recall@10": 0.9084,
+   "MRR@10": 0.9681
+  },
+  "Sparse(M3)": {
+   "nDCG@10": 0.8323,
+   "Recall@10": 0.8108,
+   "MRR@10": 0.9239
+  },
+  "Dense+Sparse": {
+   "nDCG@10": 0.9081,
+   "Recall@10": 0.8943,
+   "MRR@10": 0.9637
+  },
+  "Dense+Sparse+BM25": {
+   "nDCG@10": 0.8908,
+   "Recall@10": 0.8688,
+   "MRR@10": 0.9544
+  },
+  "Dense+Sparse+BM25+Rerank": {
+   "nDCG@10": 0.9272,
+   "Recall@10": 0.915,
+   "MRR@10": 0.9638
+  }
+ }
+}
