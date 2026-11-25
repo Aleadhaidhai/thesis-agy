@@ -24,3 +24,10 @@ experiments/runs/*.npz
 thesis/build/*
 !thesis/build/thesis.docx
 !thesis/build/thesis_preview.pdf
+
+# Proposal build intermediates (keep final compiled report & slides)
+proposal/build/*
+!proposal/build/proposal.docx
+!proposal/build/proposal_preview.pdf
+!proposal/build/proposal_slides.pptx
+!proposal/build/proposal_slides_preview.pdf
