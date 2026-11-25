@@ -192,28 +192,64 @@ UNNUMBERED = {"摘要", "摘　要", "Abstract", "ABSTRACT", "目录", "目　�
               "在读期间发表的学术论文与取得的其他研究成果"}
 
 
+def _disp_len(text: str) -> float:
+    return sum(2.0 if ord(ch) > 127 else 1.05 for ch in text.strip())
+
+
 def three_line(table):
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     tbl = table._tbl
     tblPr = tbl.tblPr
-    for el in tblPr.findall(qn("w:tblStyle")):
+    for tag in ("w:tblStyle", "w:tblW", "w:tblLayout"):
+        for el in tblPr.findall(qn(tag)):
+            tblPr.remove(el)
+    total_tw = 8300  # A4 宽度 21cm 减去左右边距 2×3.17cm ≈ 14.66cm ≈ 8310 dxa
+    tw = OxmlElement("w:tblW"); tw.set(qn("w:w"), str(total_tw)); tw.set(qn("w:type"), "dxa"); tblPr.append(tw)
+    tl = OxmlElement("w:tblLayout"); tl.set(qn("w:type"), "fixed"); tblPr.append(tl)
+    for el in tblPr.findall(qn("w:tblCellMar")):
         tblPr.remove(el)
-    for el in tblPr.findall(qn("w:tblW")):
-        tblPr.remove(el)
-    tw = OxmlElement("w:tblW"); tw.set(qn("w:w"), "5000"); tw.set(qn("w:type"), "pct"); tblPr.append(tw)
+    cmar = OxmlElement("w:tblCellMar")
+    for side, val in (("left", "70"), ("right", "70")):
+        s_el = OxmlElement(f"w:{side}"); s_el.set(qn("w:w"), val); s_el.set(qn("w:type"), "dxa"); cmar.append(s_el)
+    tblPr.append(cmar)
+
+    ncols = len(table.columns)
+    fsize = 9.0 if ncols >= 9 else (9.5 if ncols >= 7 else 10.5)
+    # 根据各列最长内容按比例分配列宽，并计入单元格内边距基础分（+3.2），避免 5 位小数窄列折行
+    col_scores = []
+    for j in range(ncols):
+        w_max = max((_disp_len(row.cells[j].text) for row in table.rows), default=4.0)
+        w_hdr = _disp_len(table.rows[0].cells[j].text) if table.rows else 4.0
+        col_scores.append(3.2 + min(34.0, max(w_max, w_hdr * 1.1)))
+    s_sum = sum(col_scores) or 1.0
+    col_tw = [max(520, int(round(total_tw * s / s_sum))) for s in col_scores]
+    diff = total_tw - sum(col_tw)
+    max_j = max(range(ncols), key=lambda k: col_tw[k])
+    col_tw[max_j] += diff
+
+    grid = tbl.find(qn("w:tblGrid"))
+    if grid is not None:
+        for gc, cw in zip(grid.findall(qn("w:gridCol")), col_tw):
+            gc.set(qn("w:w"), str(cw))
+
     nrows = len(table.rows)
     for i, row in enumerate(table.rows):
         trPr = row._tr.get_or_add_trPr()
         trPr.append(OxmlElement("w:cantSplit"))
         if i == 0:
             trPr.append(OxmlElement("w:tblHeader"))
-        for cell in row.cells:
+        for j, cell in enumerate(row.cells):
+            tcPr = cell._tc.get_or_add_tcPr()
+            for tcw in tcPr.findall(qn("w:tcW")):
+                tcPr.remove(tcw)
+            ncw = OxmlElement("w:tcW"); ncw.set(qn("w:w"), str(col_tw[j])); ncw.set(qn("w:type"), "dxa")
+            tcPr.append(ncw)
             set_cell_border(cell, top=12 if i == 0 else (6 if i == 1 else None),
                             bottom=12 if i == nrows - 1 else (6 if i == 0 else None))
             for p in cell.paragraphs:
                 para_fmt(p, align=WD_ALIGN_PARAGRAPH.CENTER, line=None)
                 p.paragraph_format.first_line_indent = Pt(0)
-                style_runs(p, SONG, TNR, 10.5, bold=True if i == 0 else None)
+                style_runs(p, SONG, TNR, fsize, bold=True if i == 0 else None)
 
 
 def postprocess(doc: Document, meta: dict):
